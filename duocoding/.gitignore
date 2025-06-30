@@ -1,0 +1,40 @@
+# === Java build files ===
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# === Java logs and crash reports ===
+*.log
+hs_err_pid*
+replay_pid*
+
+# === J2ME (Mobile Tools for Java) ===
+.mtj.tmp/
+
+# === Node.js / Angular ===
+node_modules/
+dist/
+npm-debug.log
+.env
+
+# Ignore Angular cache in all subfolders
+**/.angular/cache/
+
+# === IDEs ===
+
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+target/
+
+# VS Code
+.vscode/
+
+# === BlueJ ===
+*.ctxt

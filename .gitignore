@@ -1,0 +1,20 @@
+# Node (Frontend)
+Duocoding-ui/node_modules/
+Duocoding-ui/dist/
+Duocoding-ui/.angular/cache/
+Duocoding-ui/npm-debug.log
+Duocoding-ui/.env
+Duocoding-ui/.vscode/
+
+# Java (Backend)
+duocoding/target/
+duocoding/out/
+duocoding/*.log
+duocoding/*.class
+duocoding/.idea/
+duocoding/*.iml
+
+# Archivos generales
+.env
+.vscode/
+npm-debug.log
