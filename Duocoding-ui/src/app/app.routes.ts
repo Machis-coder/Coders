@@ -12,13 +12,13 @@ import { QuestionsComponent } from './features/questions-component/questions.com
 import { TestsComponent } from './features/tests-component/tests.component';
 import { NewTestComponent } from './features/new-test-component/new-test.component';
 
+
 export const routes: Routes = [
     { path: '', redirectTo: ConstRoutes.PATH_LOGIN, pathMatch: 'full' },
     { path: ConstRoutes.PATH_LOGIN, component: LoginComponent },
     { path: 'home', component: HomeComponent },
     { path: 'teacher-subjects', component: TeacherSignatureComponent, data: { roles:["TEACHER"]}},
     { path: 'student-subjects', component: StudentSignatureComponent, data: { roles:["PUPIL"]}},
-    
     { path: 'users', component: UsersComponent, data: { roles:["ADMIN","SUPER"]} },
     { path: 'user', component: UserComponent, data: { roles:["ADMIN","SUPER"]}},
     { path: 'signatures', component: SignaturesComponent, data: { roles:["TEACHER", "ADMIN","SUPER"]}},

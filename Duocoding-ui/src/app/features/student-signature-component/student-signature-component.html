@@ -1,2 +1,13 @@
 <app-home-navigation/>
 <p>Student Signatures</p>
+<h2>Mis asignaturas</h2>
+
+<ul *ngIf="subjects.length > 0; else noSubjects">
+    <li *ngFor="let subject of subjects">
+        {{ subject.subjectName }}
+    </li>
+</ul>
+
+<ng-template #noSubjects>
+    <p>No tienes asignaturas asignadas.</p>
+</ng-template>

@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/usersubject")
+@CrossOrigin("*")
 public class UserSubjectCotroller {
 
     @Autowired

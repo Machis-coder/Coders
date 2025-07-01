@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
-import to, {headers, loadCredentials} from "./utils.service";
 import ConstUrls from "../../shared/contants/const-urls";
 import { User } from 'src/app/interfaces/user';
 import { Observable } from 'rxjs';
