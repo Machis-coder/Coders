@@ -32,7 +32,7 @@ public class UserSubjectService {
     }
 
     public List<UserSubjectResponseDTO> getUsersBySubject(Long subjectId) {
-        return userSubjectRepository.findBySubjectIdAndActiveTrue(subjectId).stream()
+        return userSubjectRepository.findBySubjectIdAndActiveTrueWithUserAndSubject(subjectId).stream()
                 .map(UserSubjectResponseDTO::new)
                 .toList();
     }

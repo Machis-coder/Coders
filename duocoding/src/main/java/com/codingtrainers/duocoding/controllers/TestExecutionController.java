@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/testexecution")
+@CrossOrigin("*")
 public class TestExecutionController {
 
     @Autowired

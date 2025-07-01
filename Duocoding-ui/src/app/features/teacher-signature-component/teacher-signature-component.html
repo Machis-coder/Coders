@@ -1,2 +1,53 @@
-<app-home-navigation/>
-<p>Teacher Signatures</p>
+<div class="teacher-signature-wrapper" style="display: flex; gap: 20px;">
+
+    <div class="subjects-list" style="flex: 1; border-right: 1px solid #ccc; padding-right: 10px;">
+        <h2>Asignaturas del Profesor</h2>
+
+        <ul *ngIf="subjects.length > 0; else noSubjects" class="subject-list">
+            <li *ngFor="let subject of subjects"
+                [class.selected]="subject.subjectId === selectedSubjectId"
+                (click)="onSelectSubject(subject)"
+                (dblclick)="onSubjectDblClick(subject)"
+                style="cursor: pointer; padding: 5px; border-bottom: 1px solid #eee;">
+                {{ subject.subjectName }}
+            </li>
+        </ul>
+
+        <ng-template #noSubjects>
+            <p>No tienes asignaturas asignadas.</p>
+        </ng-template>
+    </div>
+
+    <div class="students-list" style="flex: 2; padding-left: 10px;">
+        <h2>Alumnos matriculados</h2>
+
+        <p *ngIf="!selectedSubjectId">Selecciona una asignatura para ver sus alumnos.</p>
+
+        <p *ngIf="loadingStudents">Cargando alumnos...</p>
+        <p *ngIf="errorStudents" class="error">{{ errorStudents }}</p>
+
+        <table *ngIf="enrolledStudents.length > 0">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Email</th>
+                <th>DNI</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let student of enrolledStudents"
+                (dblclick)="onStudentDblClick(student)"
+                style="cursor: pointer;">
+                <td>{{ student.name }}</td>
+                <td>{{ student.surname }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.dni }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p *ngIf="selectedSubjectId && enrolledStudents.length === 0 && !loadingStudents">No hay alumnos matriculados en esta asignatura.</p>
+    </div>
+
+</div>
