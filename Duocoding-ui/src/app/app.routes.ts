@@ -11,6 +11,7 @@ import { SignaturesComponent } from './features/signatures-component/signatures.
 import { QuestionsComponent } from './features/questions-component/questions.component';
 import { TestsComponent } from './features/tests-component/tests.component';
 import { NewTestComponent } from './features/new-test-component/new-test.component';
+import { RegisterComponent } from './features/register/register.component';
 
 export const routes: Routes = [
     { path: '', redirectTo: ConstRoutes.PATH_LOGIN, pathMatch: 'full' },
@@ -29,7 +30,8 @@ export const routes: Routes = [
 
     { path: 'questions', component: QuestionsComponent, data: { roles:["TEACHER", "ADMIN","SUPER"]}},
 
-    { path: ConstRoutes.PATH_FORBIDDEN, component: ForbiddenComponent}
+    { path: ConstRoutes.PATH_FORBIDDEN, component: ForbiddenComponent},
+    { path: 'register', component: RegisterComponent },
 
 ];
 

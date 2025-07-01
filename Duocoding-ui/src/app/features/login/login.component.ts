@@ -53,4 +53,7 @@ export class LoginComponent implements OnInit {
         }
     });
   }
+  goToRegister() {
+  this.router.navigate(['/register']); // Ruta al formulario de registro
+}
 }
