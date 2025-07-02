@@ -2,6 +2,7 @@ package com.codingtrainers.duocoding.controllers;
 
 import com.codingtrainers.duocoding.dto.input.UserRequestDTO;
 import com.codingtrainers.duocoding.dto.output.UserResponseDTO;
+import com.codingtrainers.duocoding.entities.Role;
 import com.codingtrainers.duocoding.entities.User;
 import com.codingtrainers.duocoding.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,6 +20,26 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody UserRequestDTO userRequestDTO) {
+
+        User user = new User();
+        user.setName(userRequestDTO.getName());
+        user.setSurname(userRequestDTO.getSurname());
+        user.setEmail(userRequestDTO.getEmail());
+        user.setUsername(userRequestDTO.getUsername());
+        user.setPassword(userRequestDTO.getPassword());
+        user.setBirthday(userRequestDTO.getBirthday());
+        user.setDni(userRequestDTO.getDni());
+        user.setRole(Role.PUPIL);
+        user.setActive(true);
+
+        userService.create(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
+
+    }
 
     @PostMapping("/")
     public ResponseEntity<Void> create(@RequestBody User user) {

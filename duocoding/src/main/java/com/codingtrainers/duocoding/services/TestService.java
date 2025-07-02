@@ -36,7 +36,7 @@ public class TestService {
     }
 
     public List<TestResponseDTO> getAllTestDTOs() {
-        List<Test> tests = testRepository.findAll();
+        List<Test> tests = testRepository.findAllActive();
         List<TestResponseDTO> dtos = new ArrayList<>();
 
         for (Test test : tests) {
@@ -54,7 +54,7 @@ public class TestService {
     }
 
     public Optional<TestResponseDTO> getTestDTOById(Long id) {
-        return testRepository.findById(id).map(test -> {
+        return testRepository.findActiveById(id).map(test -> {
             List<QuestionResponseDTO> questions = getQuestionsForTest(test.getId());
             return new TestResponseDTO(
                     test.getId(),
@@ -179,7 +179,7 @@ public class TestService {
                 }
             } catch (NumberFormatException ignored) {}
 
-            List<Response> responses = responseRepository.findByQuestionId(question.getId());
+            List<Response> responses = responseRepository.findActiveByQuestionId(question.getId());
             questionDTO.responses = responses.stream().map(r -> {
                 ExamStructureResponseDTO.ResponseDTO responseDTO = new ExamStructureResponseDTO.ResponseDTO();
                 responseDTO.responseId = r.getId();

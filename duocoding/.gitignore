@@ -32,7 +32,7 @@ npm-debug.log
 *.iml
 out/
 target/
-
+.yml
 # VS Code
 .vscode/
 
