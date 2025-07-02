@@ -43,25 +43,20 @@ public class UserSubjectService {
         Subject subject = subjectRepository.findById(subjectId).orElseThrow(() ->
                 new RuntimeException("Subject not found with ID: " + subjectId));
 
-
         Optional<UserSubject> exists = userSubjectRepository.findByUserIdAndSubjectIdAndActiveTrue(userId, subjectId);
             if (exists.isPresent()) {
-             throw new RuntimeException("User is already assigned to the subject.");
-        }
-
-
-        Optional<UserSubject> isActive = userSubjectRepository.findByUserIdAndSubjectId(userId, subjectId);
+                throw new RuntimeException("User is already assigned to the subject.");
+            }
+            Optional<UserSubject> isActive = userSubjectRepository.findByUserIdAndSubjectId(userId, subjectId);
             if (isActive.isPresent()) {
                 UserSubject reusing = isActive.get();
                 reusing.setActive(false);
                     return userSubjectRepository.save(reusing);
         }
-
         UserSubject us = new UserSubject();
             us.setUser(user);
             us.setSubject(subject);
             us.setActive(true);
-
          return userSubjectRepository.save(us);
     }
 

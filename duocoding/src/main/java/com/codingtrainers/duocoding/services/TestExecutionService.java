@@ -40,9 +40,6 @@ public class TestExecutionService {
     @Autowired
     private QuestionService questionService;
 
-
-
-
     public List<TestExecutionDTO> getTestExecutionsDTO() {
         return testExecutionRepository.findAllByActiveTrue().stream()
                 .map(TestExecutionDTO::new)
@@ -84,6 +81,13 @@ public class TestExecutionService {
         execution.setActive(false);
         testExecutionRepository.save(execution);
     }
+    public void activateTestExecution(Long testExecutionId) {
+        TestExecution execution = testExecutionRepository.findFalseById(testExecutionId)
+                .orElseThrow(() -> new RuntimeException("TestExecution not found"));
+
+        execution.setActive(true);
+        testExecutionRepository.save(execution);
+    }
 
 
     public Optional<TestExecutionDTO> getTestExecutionDTOById(Long id) {
@@ -94,7 +98,7 @@ public class TestExecutionService {
 
         List<TestExecutionResponseDTO> responses = testExecutionResponseRepository.findActiveByTestExecutionId(id)
                 .stream()
-                .map(TestExecutionResponseDTO::new)
+                .map(response -> new TestExecutionResponseDTO(response, response.getQuestion()))
                 .collect(Collectors.toList());
 
         TestExecutionDTO dto = new TestExecutionDTO(execution);
@@ -186,7 +190,7 @@ public class TestExecutionService {
 
 
     //NO FUNCIONA
-    public TestExecutionFullDTO getTestExecution(Long testExecutionId) {
+ /*   public TestExecutionFullDTO getTestExecution(Long testExecutionId) {
         TestExecution testExecution = testExecutionRepository.findActiveById(testExecutionId)
                 .orElseThrow(() -> new EntityNotFoundException("Test Execution not found"));
 
@@ -290,5 +294,5 @@ public class TestExecutionService {
 
         return dto;
     }
-
+*/
 }
