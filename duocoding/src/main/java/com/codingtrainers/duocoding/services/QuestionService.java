@@ -36,6 +36,11 @@ public class QuestionService {
         return questionRepository.findAllByActiveTrue();
     }
 
+    public List<Question>getAllInactiveQuestions() {
+
+        return questionRepository.findAllByActiveFalse();
+    }
+
     public Question getById(Long id) {
         return questionRepository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new RuntimeException("Question not found"));
@@ -45,6 +50,7 @@ public class QuestionService {
         if (question == null) {
             throw new IllegalArgumentException("Question cannot be null");
         }
+        question.setActive(true);
         return questionRepository.save(question);
     }
 
@@ -59,7 +65,7 @@ public class QuestionService {
         if (id == null) {
             throw new IllegalArgumentException("ID cannot be null");
         }
-        Question question = questionRepository.findById(id)
+        Question question = questionRepository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new RuntimeException("Question not found"));
 
         question.setActive(false);
@@ -82,4 +88,5 @@ public class QuestionService {
 
         return responseRepository.findAllActiveByQuestionIdIn(questionIds);
     }
+
 }

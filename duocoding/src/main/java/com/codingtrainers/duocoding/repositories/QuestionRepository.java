@@ -16,6 +16,9 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     List<Question> findAllActiveByIdIn(@Param("ids") List<Long> ids);
 
     List<Question> findAllByActiveTrue();
+
     Optional<Question> findByIdAndActiveTrue(Long id);
+
+    List<Question>findAllByActiveFalse();
 }
 

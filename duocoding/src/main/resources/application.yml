@@ -8,7 +8,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/duocoding
     username: root
-    password: admin
+    password: 123
   jpa:
     hibernate:
       ddl-auto: none
