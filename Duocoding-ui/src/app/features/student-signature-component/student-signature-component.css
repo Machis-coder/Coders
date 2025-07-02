@@ -1,0 +1,42 @@
+.student-signature-container {
+    max-width: 400px;
+    margin: 80px auto;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.subject-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.subject-list li {
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.8rem;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: default;
+    transition: background-color 0.3s ease;
+}
+
+.subject-list li:hover {
+    background-color: #e6f0ff;
+}
+
+.no-subjects {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    margin-top: 2rem;
+}

@@ -79,4 +79,8 @@ public class UserResponseDTO {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public boolean isActive() {
+        return true;
+    }
 }

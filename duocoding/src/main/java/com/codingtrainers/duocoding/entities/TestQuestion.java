@@ -49,8 +49,8 @@ public class TestQuestion {
         return test;
     }
 
-    public void setTest(Test test) {
-        this.test = test;
+    public void setTest(Test test2) {
+        this.test = test2;
     }
 
     public Question getQuestion() {

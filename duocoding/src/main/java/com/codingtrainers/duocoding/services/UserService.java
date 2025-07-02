@@ -66,10 +66,11 @@ public class UserService {
                 .collect(Collectors.toList());
     }
     public User findUserByUsernameAndPassword(String username, String password) throws Exception {
-        return userRepository.userLogin(username, password).stream().findFirst().orElseThrow(() ->
-                new Exception("User not found by username and password")
-        );
+        String hashedPassword = HashUtils.sha256(password);
+        return userRepository.userLogin(username, hashedPassword)
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new Exception("User not found by username and password"));
     }
-
 
 }

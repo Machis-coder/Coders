@@ -51,8 +51,8 @@ public class Question {
         return type;
     }
 
-    public void setType(QuestionType type) {
-        this.type = type;
+    public void setType(String freetext) {
+        this.type = QuestionType.valueOf(freetext);
     }
 
     public String getDescription() {
