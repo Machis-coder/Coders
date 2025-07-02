@@ -21,7 +21,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //controller registro NUEVO
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody UserRequestDTO userRequestDTO) {
 

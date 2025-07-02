@@ -15,21 +15,21 @@ export class UserService {
 
     findUsers(): Observable<HttpResponse<User[]>> {
         return this.http.get<User[]>(this.END_POINT_URL + '/', {
-                    //headers: headers,
+
                     observe: 'response'
                 });
     }
 
     findUser(id: number) {
          return this.http.get<User>(this.END_POINT_URL + '/' + id, {
-                    //headers: headers,
+
                     observe: 'response'
                 });
     }
 
     save(user: User) {
         return this.http.post<User>(this.END_POINT_URL + '/', user, {
-                    //headers: headers,
+
                     observe: "response",
                 });
     }  
