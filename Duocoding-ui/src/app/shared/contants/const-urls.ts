@@ -13,4 +13,7 @@ export default class ConstUrls {
 
     public static readonly NICK_USUARIO_PARAM = 'nickUsuario';
     public static readonly PASS_USUARIO_PARAM = 'contrasena';
+
+    public static readonly CONTEXT_SUBJECT = '/subject';  
+    
 }
