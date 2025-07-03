@@ -6,6 +6,7 @@ import {UserSubjectService} from "../../core/services/usersubject.service";
 import {Router} from "@angular/router";
 import {UserSubjectResponseDTO} from "../../interfaces/UserSubjectResponseDTO";
 import {getUser} from "../../core/services/utils.service";
+import {TestExecutionService} from "../../core/services/TestExecution.service";
 
 @Component({
   selector: 'app-teacher-signature',
@@ -18,6 +19,7 @@ export class TeacherSignatureComponent extends BasePage implements OnInit {
 
   userSubjectService = inject(UserSubjectService);
   router = inject(Router);
+  testExecutionService = inject(TestExecutionService);
 
   subjects: UserSubjectResponseDTO[] = [];
   selectedSubjectId: number | null = null;

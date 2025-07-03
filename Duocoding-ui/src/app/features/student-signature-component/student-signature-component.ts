@@ -7,10 +7,11 @@ import {LoginService} from "../../core/services/login.service";
 import {UserSubjectResponseDTO} from "../../interfaces/UserSubjectResponseDTO";
 import {getUser} from "../../core/services/utils.service";
 import {Router} from "@angular/router";
+import {CardComponent} from "../../shared/components/card-component/card-component";
 
 @Component({
   selector: 'app-student-signature',
-  imports: [CommonModule, HomeNavigationComponent],
+  imports: [CommonModule],
   templateUrl: './student-signature-component.html',
   standalone: true,
   styleUrls: ['./student-signature-component.css']
@@ -31,5 +32,8 @@ export class StudentSignatureComponent extends BasePage implements OnInit {
       next:data => this.subjects=data,
       error: err => console.error (err)
     });
+  }
+  goToDetail(id: number) {
+    this.router.navigate(['/detalle-materia', id]);
   }
 }

@@ -1,42 +1,48 @@
-.student-signature-container {
-    max-width: 400px;
-    margin: 80px auto;
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: flex-start;
     padding: 2rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-sizing: border-box;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-h2 {
+ h2 {
+    font-size:2.5rem;
     text-align: center;
-    margin-bottom: 1.5rem;
+}
+h3{
+    font-size:1.8rem;
+}
+.card {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 2rem;
+    width: 350px;
+    min-height: 180px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    color: #222;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.card h2 {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
 }
 
-.subject-list {
-    list-style: none;
-    padding: 0;
+.card p {
+    font-size: 2rem;
+    line-height: 1.5;
     margin: 0;
 }
 
-.subject-list li {
-    padding: 0.8rem 1rem;
-    margin-bottom: 0.8rem;
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-weight: 500;
-    cursor: default;
-    transition: background-color 0.3s ease;
-}
-
-.subject-list li:hover {
-    background-color: #e6f0ff;
-}
-
-.no-subjects {
-    text-align: center;
-    color: #666;
-    font-style: italic;
-    margin-top: 2rem;
+.card:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    background-color: #022446;
+    color: white;
 }
