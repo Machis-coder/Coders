@@ -22,15 +22,6 @@ export class TestExecutionService {
     getDeletedTestExecutions(): Observable<TestExecutionGeneralDTO[]> {
         return this.http.get<TestExecutionGeneralDTO[]>(`${this.END_POINT_URL}/false`);
     }
-
-    deleteTestExecution(id: number): Observable<void> {
-        return this.http.put<void>(`${this.END_POINT_URL}/${id}/delete`, {});
-    }
-
-    activateTestExecution(id: number): Observable<void> {
-        return this.http.put<void>(`${this.END_POINT_URL}/${id}/activate`, {});
-    }
-
     getTestExecutionFULLById(id: number): Observable<TestExecutionGeneralDTO> {
         return this.http.get<TestExecutionGeneralDTO>(`${this.END_POINT_URL}/id/${id}`);
     }
@@ -46,6 +37,15 @@ export class TestExecutionService {
     getTestExecutionsByUserId(userId: number): Observable<TestExecutionGeneralDTO[]> {
         return this.http.get<TestExecutionGeneralDTO[]>(`${this.END_POINT_URL}/users/${userId}/executions`);
     }
+
+    deleteTestExecution(id: number): Observable<void> {
+        return this.http.put<void>(`${this.END_POINT_URL}/${id}/delete`, {});
+    }
+
+    activateTestExecution(id: number): Observable<void> {
+        return this.http.put<void>(`${this.END_POINT_URL}/${id}/activate`, {});
+    }
+
 
 
 }
