@@ -1,18 +1,25 @@
 <h2>Asignaturas</h2>
-
-<form [formGroup]="subjectForm" (ngSubmit)="saveSubject()">
-  <label>
-    Nombre:
-    <input formControlName="name" />
-  </label>
-  <div *ngIf="subjectForm.controls.name.invalid && subjectForm.controls.name.touched" style="color:red">
-    El nombre es obligatorio.
+<h3>Crear nueva asignatura</h3>
+<form class="crear-container" [formGroup]="subjectForm" (ngSubmit)="saveSubject()">
+  <div class="contenedor-label">
+       <label>
+        Nombre:
+        <input formControlName="name" />
+      </label>
+      <div *ngIf="subjectForm.controls.name.invalid && subjectForm.controls.name.touched" style="color:red">
+            El nombre es obligatorio.
+      </div>
   </div>
 
+  <div class="contenedor-label">
   <label>
     Descripción:
     <input formControlName="description" />
   </label>
+</div>
+
+
+
 
   <button type="submit" [disabled]="subjectForm.invalid">
     {{ selectedSubjectId ? 'Actualizar' : 'Crear' }}
@@ -20,18 +27,32 @@
   <button type="button" (click)="newSubject()">Nuevo</button>
 </form>
 
-<hr />
 
     
     
-   <div class="card-container">
-  <div class="login-container" *ngFor="let subject of subjectList">
-    <b (dblclick)="editSubject(subject)">{{ subject.name }}</b> - {{ subject.description }} - Activo: {{ subject.active }}
+<table class="generic-table">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Activo</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let subject of subjectList; let i = index" [ngClass]="i % 2 === 0 ? 'row-even' : 'row-odd'">
+      <td><b (dblclick)="editSubject(subject)">{{ subject.name }}</b></td>
+      <td>{{ subject.description }}</td>
+      <td>{{ subject.active }}</td>
+      <td>
+        <button class="button_primary" (click)="deleteSubject(subject.id)">Borrar</button>
+        <button class="button_primary" *ngIf="!subject.active" (click)="activateSubject(subject.id)">Activar</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-    <button class="button_primary" (click)="deleteSubject(subject.id)">Borrar</button>
-    <button class="button_primary" *ngIf="!subject.active" (click)="activateSubject(subject.id)">Activar</button>
-  </div>
-</div>
+
 
     
   
