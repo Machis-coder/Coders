@@ -4,16 +4,23 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import com.codingtrainers.duocoding.entities.Question;
 import com.codingtrainers.duocoding.entities.QuestionType;
+import com.codingtrainers.duocoding.entities.Response;
+import com.codingtrainers.duocoding.entities.TestQuestion;
 import com.codingtrainers.duocoding.repositories.QuestionRepository;
+import com.codingtrainers.duocoding.repositories.ResponseRepository;
+import com.codingtrainers.duocoding.repositories.TestQuestionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,171 +34,145 @@ public class QuestionServiceTest {
 
     private Question sampleQuestion;
 
+    @Mock
+    private TestQuestionRepository testQuestionRepository;
+
+    @Mock
+    private ResponseRepository responseRepository;
+
     @BeforeEach
     void setUp() {
-        sampleQuestion = new Question();
-        sampleQuestion.setId(1L);
-        sampleQuestion.setType(QuestionType.FREETEXT);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void getAllQuestions_returnsList() {
-        when(questionRepository.findAll()).thenReturn(Arrays.asList(sampleQuestion));
+    void getAllQuestions_ShouldReturnOnlyActiveQuestions() {
+        List<Question> activeQuestions = Arrays.asList(
+                new Question(1L, null, "Desc 1", "Answer 1", true),
+                new Question(2L, null, "Desc 2", "Answer 2", true)
+        );
+        when(questionRepository.findAllByActiveTrue()).thenReturn(activeQuestions);
 
-        List<Question> questions = questionService.getAllQuestions();
+        List<Question> result = questionService.getAllQuestions();
 
-        assertEquals(1, questions.size());
-        assertEquals(QuestionType.FREETEXT, questions.get(0).getType());
-        verify(questionRepository, times(1)).findAll();
+        assertEquals(2, result.size());
+        verify(questionRepository).findAllByActiveTrue();
     }
 
     @Test
-    void getAllQuestions_returnsEmptyListWhenNoQuestionsExist() {
-        when(questionRepository.findAll()).thenReturn(List.of());
+    void getById_WhenExists_ShouldReturnQuestion() {
+        Question q = new Question(1L, null, "Desc", "Answer", true);
+        when(questionRepository.findByIdAndActiveTrue(1L)).thenReturn(Optional.of(q));
 
-        List<Question> questions = questionService.getAllQuestions();
+        Question result = questionService.getById(1L);
 
-        assertEquals(0, questions.size());
-        verify(questionRepository, times(1)).findAll();
+        assertNotNull(result);
+        assertEquals(1L, result.getId());
+        verify(questionRepository).findByIdAndActiveTrue(1L);
     }
 
     @Test
-    void getById_returnsQuestion() {
-        when(questionRepository.findById(1L)).thenReturn(java.util.Optional.of(sampleQuestion));
+    void getById_WhenNotExists_ShouldThrow() {
+        when(questionRepository.findByIdAndActiveTrue(1L)).thenReturn(Optional.empty());
 
-        Question question = questionService.getById(1L);
-
-        assertEquals(QuestionType.FREETEXT, question.getType());
-        verify(questionRepository, times(1)).findById(1L);
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> questionService.getById(1L));
+        assertEquals("Question not found", ex.getMessage());
     }
 
     @Test
-    void getById_throwsExceptionWhenNotFound() {
-        when(questionRepository.findById(2L)).thenReturn(java.util.Optional.empty());
-
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            questionService.getById(2L);
-        });
-
-        assertEquals("Question Not Found", exception.getMessage());
-        verify(questionRepository, times(1)).findById(2L);
+    void createQuestion_NullQuestion_ShouldThrow() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> questionService.createQuestion(null));
+        assertEquals("Question cannot be null", ex.getMessage());
     }
 
     @Test
-    void getById_withNullId_throwsException() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            questionService.getById(null);
-        });
+    void createQuestion_ValidQuestion_ShouldSave() {
+        Question q = new Question(null, null, "Desc", "Answer", true);
+        when(questionRepository.save(q)).thenReturn(q);
 
-        assertEquals("ID cannot be null", exception.getMessage());
+        Question result = questionService.createQuestion(q);
+
+        assertEquals(q, result);
+        verify(questionRepository).save(q);
     }
 
     @Test
-    void createQuestion_savesAndReturnsQuestion() {
-        when(questionRepository.save(sampleQuestion)).thenReturn(sampleQuestion);
-
-        Question created = questionService.createQuestion(sampleQuestion);
-
-        assertEquals(QuestionType.FREETEXT, created.getType());
-        verify(questionRepository, times(1)).save(sampleQuestion);
+    void updateQuestion_NullQuestion_ShouldThrow() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> questionService.updateQuestion(null));
+        assertEquals("Question cannot be null", ex.getMessage());
     }
 
     @Test
-    void createQuestion_withNull_throwsException() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            questionService.createQuestion(null);
-        });
+    void updateQuestion_ValidQuestion_ShouldSave() {
+        Question q = new Question(1L, null, "Desc", "Answer", true);
+        when(questionRepository.save(q)).thenReturn(q);
 
-        assertEquals("Question cannot be null", exception.getMessage());
+        Question result = questionService.updateQuestion(q);
+
+        assertEquals(q, result);
+        verify(questionRepository).save(q);
     }
 
     @Test
-    void updateQuestion_savesAndReturnsQuestion() {
-        when(questionRepository.save(sampleQuestion)).thenReturn(sampleQuestion);
-
-        Question updated = questionService.updateQuestion(sampleQuestion);
-
-        assertEquals(QuestionType.FREETEXT, updated.getType());
-        verify(questionRepository, times(1)).save(sampleQuestion);
+    void deleteQuestionById_NullId_ShouldThrow() {
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> questionService.deleteQuestionById(null));
+        assertEquals("ID cannot be null", ex.getMessage());
     }
 
     @Test
-    void updateQuestion_withNull_throwsException() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            questionService.updateQuestion(null);
-        });
+    void deleteQuestionById_NotFound_ShouldThrow() {
+        when(questionRepository.findByIdAndActiveTrue(1L)).thenReturn(Optional.empty());
 
-        assertEquals("Question cannot be null", exception.getMessage());
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> questionService.deleteQuestionById(1L));
+        assertEquals("Question not found", ex.getMessage());
     }
 
     @Test
-    void updateQuestion_whenQuestionDoesNotExist_stillSaves() {
-        sampleQuestion.setId(999L);
-        when(questionRepository.save(sampleQuestion)).thenReturn(sampleQuestion);
+    void deleteQuestionById_Found_ShouldSetInactiveAndSave() {
+        Question q = new Question(1L, null, "Desc", "Answer", true);
+        when(questionRepository.findByIdAndActiveTrue(1L)).thenReturn(Optional.of(q));
+        when(questionRepository.save(any())).thenReturn(q);
 
-        Question result = questionService.updateQuestion(sampleQuestion);
+        String result = questionService.deleteQuestionById(1L);
 
-        assertEquals(QuestionType.FREETEXT, result.getType());
-        verify(questionRepository, times(1)).save(sampleQuestion);
+        assertEquals("Question marked as inactive successfully", result);
+        assertFalse(q.isActive());
+        verify(questionRepository).save(q);
+    }
+
+
+    @Test
+    void findTestQuestionsByTestId_ShouldReturnList() {
+        List<TestQuestion> list = Collections.singletonList(new TestQuestion());
+        when(testQuestionRepository.findByTestId(10L)).thenReturn(list);
+
+        List<TestQuestion> result = questionService.findTestQuestionsByTestId(10L);
+
+        assertEquals(list, result);
     }
 
     @Test
-    void deleteQuestionById_deletesIfExists() {
-        when(questionRepository.existsById(1L)).thenReturn(true);
+    void findAllByIds_ShouldReturnQuestions() {
+        List<Long> ids = Arrays.asList(1L, 2L);
+        List<Question> questions = Arrays.asList(
+                new Question(1L, null, "Desc1", "Answer1", true),
+                new Question(2L, null, "Desc2", "Answer2", true)
+        );
+        when(questionRepository.findAllActiveByIdIn(ids)).thenReturn(questions);
 
-        String message = questionService.deleteQuestionById(1L);
+        List<Question> result = questionService.findAllByIds(ids);
 
-        assertEquals("Question removed successfully", message);
-        verify(questionRepository, times(1)).existsById(1L);
-        verify(questionRepository, times(1)).deleteById(1L);
+        assertEquals(2, result.size());
     }
 
     @Test
-    void deleteQuestionById_throwsExceptionIfNotFound() {
-        when(questionRepository.existsById(2L)).thenReturn(false);
+    void findAllResponsesByQuestionIds_ShouldReturnResponses() {
+        List<Long> questionIds = Arrays.asList(1L, 2L);
+        List<Response> responses = Collections.singletonList(new Response());
+        when(responseRepository.findAllActiveByQuestionIdIn(questionIds)).thenReturn(responses);
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            questionService.deleteQuestionById(2L);
-        });
+        List<Response> result = questionService.findAllResponsesByQuestionIds(questionIds);
 
-        assertEquals("Question not found", exception.getMessage());
-        verify(questionRepository, times(1)).existsById(2L);
-    }
-
-    @Test
-    void deleteQuestionById_withNullId_throwsException() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            questionService.deleteQuestionById(null);
-        });
-
-        assertEquals("ID cannot be null", exception.getMessage());
-    }
-
-    @Test
-    void deleteQuestionById_repositoryThrowsException_bubblesUp() {
-        when(questionRepository.existsById(1L)).thenThrow(new RuntimeException("Database error"));
-
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            questionService.deleteQuestionById(1L);
-        });
-
-        assertEquals("Database error", exception.getMessage());
-        verify(questionRepository, times(1)).existsById(1L);
-    }
-
-    @Test
-    void fullFlow_createAndFetchAndDeleteQuestion() {
-
-        when(questionRepository.save(sampleQuestion)).thenReturn(sampleQuestion);
-        Question created = questionService.createQuestion(sampleQuestion);
-        assertEquals(QuestionType.FREETEXT, created.getType());
-
-        when(questionRepository.findById(1L)).thenReturn(java.util.Optional.of(sampleQuestion));
-        Question fetched = questionService.getById(1L);
-        assertEquals(QuestionType.FREETEXT, fetched.getType());
-
-        when(questionRepository.existsById(1L)).thenReturn(true);
-        String message = questionService.deleteQuestionById(1L);
-        assertEquals("Question removed successfully", message);
+        assertEquals(responses, result);
     }
 }

@@ -23,7 +23,6 @@ public class SubjectServiceTest {
     private SubjectService subjectService;
 
     private Subject sampleSubject;
-
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);

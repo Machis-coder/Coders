@@ -14,6 +14,7 @@ import com.codingtrainers.duocoding.repositories.QuestionRepository;
 import com.codingtrainers.duocoding.repositories.TestExecutionRepository;
 import com.codingtrainers.duocoding.repositories.TestExecutionResponseRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -47,6 +48,7 @@ public class TestExecutionServiceTest {
 
     @InjectMocks
     private TestExecutionService testExecutionService;
+
 
     @Test
     void saveTestExecutionTest() {
@@ -212,7 +214,7 @@ public class TestExecutionServiceTest {
                 .thenReturn(Optional.empty());
 
         RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
-            testExecutionService.gesTestExecutionById(testExecutionId);
+            testExecutionService.getTestExecutionDTOById(testExecutionId);
         });
 
         assertEquals("TestExecution not found", thrown.getMessage());
@@ -253,5 +255,68 @@ public class TestExecutionServiceTest {
         verify(testExecutionResponseRepository, never()).save(Mockito.any(TestExecutionResponse.class));
     }
 
-}
+    @Test
+    void getTestExecutionsDTO_emptyList_returnsEmptyList() {
+        when(testExecutionRepository.findAllByActiveTrue()).thenReturn(Collections.emptyList());
 
+        List<TestExecutionDTO> results = testExecutionService.getTestExecutionsDTO();
+
+        assertNotNull(results);
+        assertTrue(results.isEmpty());
+    }
+
+    @Test
+    void deleteTestExecution_Success() {
+        TestExecution exec = new TestExecution();
+        exec.setId(1L);
+        exec.setActive(true);
+
+        when(testExecutionRepository.findActiveById(1L)).thenReturn(Optional.of(exec));
+
+        testExecutionService.deleteTestExecution(1L);
+
+        assertFalse(exec.isActive());
+        verify(testExecutionRepository).save(exec);
+    }
+
+    @Test
+    void deleteTestExecution_NotFound_ThrowsException() {
+        when(testExecutionRepository.findActiveById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> {
+            testExecutionService.deleteTestExecution(1L);
+        });
+    }
+
+    @Test
+    void getTestExecution_NotFound_ThrowsException() {
+        when(testExecutionRepository.findActiveById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> {
+            testExecutionService.getTestExecutionDTOById(1L);
+        });
+    }
+
+    @Test
+    void saveTestExecution_QuestionNotFound_ThrowsException() {
+        TestExecutionResponseRequestDTO responseDTO = new TestExecutionResponseRequestDTO();
+        responseDTO.setQuestionId(1L);
+        responseDTO.setAnswer("3");
+
+        TestExecutionRequestDTO requestDTO = new TestExecutionRequestDTO();
+        requestDTO.setDate(null);
+        requestDTO.setTestId(1L);
+        requestDTO.setUserId(1L);
+        requestDTO.setResponses(List.of(responseDTO));
+
+        when(questionRepository.findAllActiveByIdIn(List.of(1L))).thenReturn(Collections.emptyList());
+
+        RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
+            testExecutionService.saveTestExecution(requestDTO);
+        });
+
+        assertTrue(thrown.getMessage().contains("Question not found"));
+    }
+
+
+}
