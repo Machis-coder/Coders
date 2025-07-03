@@ -5,4 +5,9 @@ export default class ConstRoutes {
     public static readonly PATH_USERS: string = '/users';
 
     public static readonly PATH_FORBIDDEN: string = 'forbidden';
+
+      public static readonly CONTEXT_SUBJECT: string = '/subject'; 
+
+  
+
 }

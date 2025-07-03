@@ -1,9 +1,39 @@
-<app-home-navigation/>
+<h2>Asignaturas</h2>
 
-<app-table [data] = userList
-    [headers] = "['name', 'surname', 'dni', 'role']"
-    [rowkey] = "'id'"
-    (rowDblClick) = "gotoEdit($event)"
-/>
+<form [formGroup]="subjectForm" (ngSubmit)="saveSubject()">
+  <label>
+    Nombre:
+    <input formControlName="name" />
+  </label>
+  <div *ngIf="subjectForm.controls.name.invalid && subjectForm.controls.name.touched" style="color:red">
+    El nombre es obligatorio.
+  </div>
 
-<button (click)="gotoNew()">New User</button>
+  <label>
+    Descripción:
+    <input formControlName="description" />
+  </label>
+
+  <button type="submit" [disabled]="subjectForm.invalid">
+    {{ selectedSubjectId ? 'Actualizar' : 'Crear' }}
+  </button>
+  <button type="button" (click)="newSubject()">Nuevo</button>
+</form>
+
+<hr />
+
+    
+    
+   <div class="card-container">
+  <div class="login-container" *ngFor="let subject of subjectList">
+    <b (dblclick)="editSubject(subject)">{{ subject.name }}</b> - {{ subject.description }} - Activo: {{ subject.active }}
+
+    <button class="button_primary" (click)="deleteSubject(subject.id)">Borrar</button>
+    <button class="button_primary" *ngIf="!subject.active" (click)="activateSubject(subject.id)">Activar</button>
+  </div>
+</div>
+
+    
+  
+
+
