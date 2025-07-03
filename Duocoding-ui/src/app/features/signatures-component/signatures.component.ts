@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { HomeNavigationComponent } from 'src/app/shared/components/home-navigation-component/home-navigation-component';
 import { SubjectResponseDTO } from 'src/app/interfaces/subjectResponseDTO';
 import { SubjectService } from 'src/app/core/services/subjectservice';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { SubjectRequestDTO } from 'src/app/interfaces/subjectRequestDTO';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -20,16 +20,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-signatures',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule, TableComponent, HomeNavigationComponent],
+  imports: [CommonModule,ReactiveFormsModule, TableComponent,FormsModule, HomeNavigationComponent],
   templateUrl: './signatures.component.html',
   styleUrl: './signatures.component.css'
 })
 export class SignaturesComponent extends BasePage {
+    searchName = '';
   userList: User[] = [];
    subjectList: SubjectResponseDTO[] = [];
    subjectForm = new FormGroup({
     name: new FormControl('', Validators.required),
     description: new FormControl(''),
+
+     
   });
   router: Router = inject(Router);
   userService: UserService = inject(UserService);
@@ -142,6 +145,7 @@ saveSubject() {
       error: err => console.error('Error activando', err)
     });
   }
+ 
   
 }
 
