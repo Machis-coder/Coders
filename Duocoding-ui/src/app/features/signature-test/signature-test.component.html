@@ -1,0 +1,64 @@
+<app-home-navigation></app-home-navigation>
+
+<div class="signature-test-wrapper">
+    <h2>Tests disponibles</h2>
+
+    <p *ngIf="loadingTests">Cargando tests disponibles...</p>
+    <p *ngIf="errorTests" class="error">{{ errorTests }}</p>
+
+    <table *ngIf="(availableTests?.length ?? 0) > 0">
+        <thead>
+        <tr>
+            <th>Nombre del Test</th>
+            <th>Descripción</th>
+            <th>Número de Preguntas</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let test of availableTests"
+            style="cursor: pointer;"
+            (click)="onAvailableTestClick(test)">
+            <td>{{ test.name }}</td>
+            <td>{{ test.description }}</td>
+            <td>{{ test.questions?.length || 0 }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p *ngIf="!loadingTests && (availableTests?.length ?? 0) === 0 && testsWereLoaded">
+        No hay tests disponibles actualmente para esta asignatura.
+    </p>
+</div>
+
+<div class="executions-wrapper"
+     *ngIf="(testExecutions?.length ?? 0) > 0 || loadingExecutions || errorExecutions">
+    <h2>Mis exámenes realizados</h2>
+
+    <p *ngIf="loadingExecutions">Cargando ejecuciones...</p>
+    <p *ngIf="errorExecutions" class="error">{{ errorExecutions }}</p>
+
+    <table *ngIf="(testExecutions?.length ?? 0) > 0">
+        <thead>
+        <tr>
+            <th>Test</th>
+            <th>Resultado</th>
+            <th>Inicio</th>
+            <th>Fin</th>
+            <th>Notas</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let execution of testExecutions">
+            <td>{{ execution.testName }}</td>
+            <td>{{ execution.result }}%</td>
+            <td>{{ execution.startTime | date: 'short' }}</td>
+            <td>{{ execution.endTime | date: 'short' }}</td>
+            <td>{{ execution.notes }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p *ngIf="!loadingExecutions && (testExecutions?.length ?? 0) === 0">
+        Aún no has realizado ningún test para esta asignatura.
+    </p>
+</div>
