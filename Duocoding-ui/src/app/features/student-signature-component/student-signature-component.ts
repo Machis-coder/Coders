@@ -12,40 +12,35 @@ import {ButtonComponent} from "../../shared/components/button-component/button-c
 import {TestexecutionService} from "../../core/services/testexecution.service";
 import {TestExecutionGeneralDTO} from "../../interfaces/TestExecutionGeneralDTO";
 import {TestExecutionResponseDTO} from "../../interfaces/TestExecutionResponseDTO";
+import {TestResponseDTO} from "../../interfaces/TestResponseDTO";
+import {TestService} from "../../core/services/test.service";
 
 @Component({
   selector: 'app-student-signature',
-  imports: [CommonModule, ButtonComponent, HomeNavigationComponent, CardComponent],
+  imports: [CommonModule, HomeNavigationComponent, CardComponent],
   templateUrl: './student-signature-component.html',
   standalone: true,
   styleUrls: ['./student-signature-component.css']
 })
 export class StudentSignatureComponent extends BasePage implements OnInit {
 
-  testExecutionService = inject(TestexecutionService);
   userSubjectService = inject(UserSubjectService);
-  router= inject(Router);
+  router = inject(Router);
 
-  subjects: UserSubjectResponseDTO[]=[];
-  executions: TestExecutionGeneralDTO[]=[];
-  fullExecution: TestExecutionResponseDTO;
+  subjects: UserSubjectResponseDTO[] = [];
 
   ngOnInit(): void {
     super.ngOnInit();
+
     const loggedUser = getUser();
     const userId = loggedUser?.id;
 
-    this.userSubjectService.getSubjectsByUser(userId).subscribe({
-      next:data => this.subjects=data,
-      error: err => console.error (err)
-    });
-
-    this.testExecutionService.getTestExecutionsByUserId(userId).subscribe({
-      next:data => this.executions=data
-    });
+    if (userId) {
+      this.userSubjectService.getSubjectsByUser(userId).subscribe({
+        next: data => this.subjects = data,
+        error: err => console.error('Error al cargar asignaturas', err)
+      });
+    }
   }
-  goToDetail(id: number) {
-    this.router.navigate(['/signature-test', id]);
-  }
-
 }
+

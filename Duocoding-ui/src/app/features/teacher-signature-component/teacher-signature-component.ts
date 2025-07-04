@@ -58,6 +58,7 @@ export class TeacherSignatureComponent extends BasePage implements OnInit {
       });
     }
   }
+
   loadTestExecutions(userId: number, subjectId: number) {
     this.loadingExecutions = true;
     this.errorExecutions = null;
@@ -76,6 +77,7 @@ export class TeacherSignatureComponent extends BasePage implements OnInit {
       }
     });
   }
+
   onSelectSubject(subject: UserSubjectResponseDTO) {
     this.selectedSubjectId = subject.subjectId;
     this.loadStudents(subject.subjectId);
@@ -97,6 +99,7 @@ export class TeacherSignatureComponent extends BasePage implements OnInit {
       }
     });
   }
+
   loadAvailableTests(subjectId: number) {
     this.loadingTests = true;
     this.errorTests = null;
@@ -114,6 +117,7 @@ export class TeacherSignatureComponent extends BasePage implements OnInit {
       }
     });
   }
+
   onSubjectDblClick(subject: UserSubjectResponseDTO) {
     this.selectedSubjectId = subject.subjectId;
     this.testsWereLoaded = true;
@@ -122,14 +126,15 @@ export class TeacherSignatureComponent extends BasePage implements OnInit {
 
   onStudentDblClick(student: UserSubjectResponseDTO) {
     this.selectedStudentId = student.userId;
-    if(this.selectedSubjectId && this.selectedStudentId) {
+    if (this.selectedSubjectId && this.selectedStudentId) {
       this.loadTestExecutions(this.selectedStudentId, this.selectedSubjectId);
     }
   }
 
-    onExecutionClick(execution: TestExecutionGeneralDTO) {
-    this.router.navigate(['/test-review-teacher',execution.id]);
+  onExecutionClick(execution: TestExecutionGeneralDTO) {
+    this.router.navigate(['/test-review-teacher', execution.id]);
   }
+
   onAvailableTestClick(test: TestResponseDTO) {
     // this.router.navigate(['/test-detail-view', test.id]); // Esperando implementación
     console.log('Vista de test no implementada aún, test ID:', test.id);
