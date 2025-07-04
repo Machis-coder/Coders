@@ -23,3 +23,4 @@ INSERT INTO question (id, type, description, answer) VALUES (4, 'FREETEXT', '¿C
 INSERT INTO test_question (id, question_id, test_id) VALUES (4, 4, 1);
 
 INSERT INTO question (id, type, description, answer) VALUES (5, 'CODE', 'Implemente el algoritmo que calcula la letra de un dni, ejecútelo para el dni 12345678', 'z');
+INSERT INTO test_question (id, question_id, test_id) VALUES (5,5,1);

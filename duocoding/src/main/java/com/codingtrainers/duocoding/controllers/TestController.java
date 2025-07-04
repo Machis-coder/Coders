@@ -72,5 +72,10 @@ public class TestController {
         }
         return ResponseEntity.ok(dto);
     }
+    @GetMapping("/available/by-subject/{subjectId}")
+    public ResponseEntity<List<TestResponseDTO>> getAvailableTestsBySubject(@PathVariable Long subjectId) {
+        List<TestResponseDTO> tests = testService.getAvailableTestsBySubject(subjectId);
+        return ResponseEntity.ok(tests);
+    }
 }
 

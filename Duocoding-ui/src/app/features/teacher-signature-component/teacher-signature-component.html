@@ -52,6 +52,38 @@
     </div>
 </div>
 
+<div class="available-tests-wrapper" *ngIf="selectedSubjectId && testsWereLoaded" style="margin-top: 30px;">
+    <h2>Tests disponibles para esta asignatura</h2>
+
+    <p *ngIf="loadingTests">Cargando tests disponibles...</p>
+    <p *ngIf="errorTests" class="error">{{ errorTests }}</p>
+
+    <table *ngIf="availableTests && availableTests.length > 0">
+        <thead>
+        <tr>
+            <th>Nombre del Test</th>
+            <th>Descripción</th>
+            <th>Número de Preguntas</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let test of availableTests"
+            style="cursor: pointer;"
+            (click)="onAvailableTestClick(test)">
+            <td>{{ test.name }}</td>
+            <td>{{ test.description }}</td>
+            <td>{{ test.questions?.length || 0 }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p *ngIf="!loadingTests && availableTests.length === 0">
+        No hay tests disponibles actualmente para esta asignatura.
+    </p>
+</div>
+
+
+
 <div class="executions-wrapper" *ngIf="selectedStudentId">
     <h2>Exámenes del alumno</h2>
 
