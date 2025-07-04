@@ -10,7 +10,7 @@ import {NotesFromTeacherRequestDTO} from "../../interfaces/NotesFromTeacherReque
 @Injectable ({
     providedIn: 'root'
 })
-export class TestExecutionService {
+export class TestexecutionService {
     constructor(private http: HttpClient) {}
 
     private END_POINT_URL = ConstUrls.API_URL + ConstUrls.CONTEXT_TESTEXECUTION;
@@ -25,6 +25,10 @@ export class TestExecutionService {
     getTestExecutionFULLById(id: number): Observable<TestExecutionGeneralDTO> {
         return this.http.get<TestExecutionGeneralDTO>(`${this.END_POINT_URL}/id/${id}`);
     }
+    getActiveTestExecutionsByUserAndSubject(userId: number, subjectId: number): Observable<TestExecutionGeneralDTO[]> {
+        return this.http.get<TestExecutionGeneralDTO[]>(`${this.END_POINT_URL}/users/${userId}/subjects/${subjectId}/executions`);
+    }
+
 
     saveTestExecution(dto: TestExecutionRequestDTO): Observable<void> {
         return this.http.post<void>(`${this.END_POINT_URL}/`, dto);
@@ -45,7 +49,5 @@ export class TestExecutionService {
     activateTestExecution(id: number): Observable<void> {
         return this.http.put<void>(`${this.END_POINT_URL}/${id}/activate`, {});
     }
-
-
 
 }

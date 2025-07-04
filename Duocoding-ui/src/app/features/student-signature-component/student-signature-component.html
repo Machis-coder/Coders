@@ -1,13 +1,8 @@
-<h2>Mis asignaturas</h2>
+<app-home-navigation></app-home-navigation>
 
-<ng-container *ngIf="subjects?.length > 0; else noSubjects">
-    <div class="cards-container">
-        <div class="card" *ngFor="let subject of subjects" (click)="goToDetail(subject.subjectId)">
-            <h3>{{ subject.subjectName }}</h3>
-        </div>
-    </div>
+<ng-container class="cards-container">
+    <app-card *ngFor="let subject of subjects"
+          [title]="subject.subjectName"
+           [navigation]="'signature-test/'+subject.subjectId"
+        />
 </ng-container>
-
-<ng-template #noSubjects>
-    <p>No tienes asignaturas asignadas.</p>
-</ng-template>
