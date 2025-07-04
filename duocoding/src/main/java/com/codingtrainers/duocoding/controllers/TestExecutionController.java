@@ -79,6 +79,18 @@ public class TestExecutionController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @GetMapping("/users/{userId}/subjects/{subjectId}/executions")
+    public ResponseEntity<List<TestExecutionDTO>> getActiveTestExecutionsByUserAndSubject(
+            @PathVariable Long userId,
+            @PathVariable Long subjectId) {
+        List<TestExecutionDTO> executions = testExecutionService.findActiveByUserIdAndSubjectId(userId, subjectId);
+
+        if (executions.isEmpty()) {
+            return ResponseEntity.noContent().build(); // HTTP 204
+        }
+        return ResponseEntity.ok(executions);
+    }
+
 
 
     //esto no funciona

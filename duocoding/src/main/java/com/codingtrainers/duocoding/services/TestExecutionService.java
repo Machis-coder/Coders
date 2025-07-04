@@ -178,16 +178,25 @@ public class TestExecutionService {
         TestExecution testExecution = testExecutionRepository.findActiveById(notes.getTestExecutionId())
                 .orElseThrow(() -> new EntityNotFoundException("TestExecution not found with id: " + notes.getTestExecutionId()));
 
-        TestExecutionResponse testExecutionResponse = testExecutionResponseRepository.findActiveById(notes.getTestExecutionResponseId())
-                .orElseThrow(() -> new EntityNotFoundException("TestExecutionResponse not found with id: " + notes.getTestExecutionResponseId()));
+        if (notes.getTestExecutionResponseId() != null && notes.getTestExecutionResponseId() != 0) {
+            TestExecutionResponse testExecutionResponse = testExecutionResponseRepository.findActiveById(notes.getTestExecutionResponseId())
+                    .orElseThrow(() -> new EntityNotFoundException("TestExecutionResponse not found with id: " + notes.getTestExecutionResponseId()));
+            testExecutionResponse.setNotes(notes.getTestExecutionResponseNotes());
+            testExecutionResponseRepository.save(testExecutionResponse);
+        }
 
-        testExecutionResponse.setNotes(notes.getTestExecutionResponseNotes());
         testExecution.setNotes(notes.getTestExecutionNotes());
-
-        testExecutionResponseRepository.save(testExecutionResponse);
         testExecutionRepository.save(testExecution);
     }
 
+    public List<TestExecutionDTO> findActiveByUserIdAndSubjectId(Long userId, Long subjectId) {
+        List<TestExecution> executions = testExecutionRepository
+                .findActiveByUserIdAndSubjectId(userId, subjectId);
+
+        return executions.stream()
+                .map(TestExecutionDTO::new)
+                .collect(Collectors.toList());
+    }
 
     //NO FUNCIONA
  /*   public TestExecutionFullDTO getTestExecution(Long testExecutionId) {

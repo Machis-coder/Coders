@@ -1,0 +1,57 @@
+<app-home-navigation></app-home-navigation>
+<div *ngIf="loading">Cargando examen...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div *ngIf="testExecution">
+
+    <h2>Test: {{ testExecution.testName }}</h2>
+    <p><strong>Fecha:</strong> {{ testExecution.date | date:'medium' }}</p>
+    <p><strong>Resultado:</strong> {{ testExecution.result }}%</p>
+
+    <div class="general-notes">
+        <label for="generalNotes"><strong>Notas generales del profesor:</strong></label>
+        <textarea
+                id="generalNotes"
+                [(ngModel)]="testExecution.notes"
+                rows="3"
+                placeholder="Añade tus comentarios generales sobre el examen...">
+    </textarea>
+        <button (click)="saveGeneralNotes()" class="btn-save">Guardar notas generales</button>
+    </div>
+
+    <table class="styled-table" *ngIf="testExecution.executionResponsesList?.length > 0">
+        <thead>
+        <tr>
+            <th>Pregunta</th>
+            <th>Respuesta dada</th>
+            <th>Respuesta correcta</th>
+            <th>Tipo</th>
+            <th>Correcta</th>
+            <th>Notas del profesor</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let resp of testExecution.executionResponsesList">
+            <td>{{ resp.questionDescription }}</td>
+            <td>{{ resp.answer }}</td>
+            <td>{{ resp.questionAnswer }}</td>
+            <td>{{ resp.questionType }}</td>
+            <td [class.correct]="resp.isCorrect" [class.incorrect]="!resp.isCorrect">
+                {{ resp.isCorrect ? '✔' : '✘' }}
+            </td>
+            <td>
+          <textarea
+                  [(ngModel)]="resp.notes"
+                  rows="2"
+                  placeholder="Nota sobre esta respuesta..."></textarea>
+                <button (click)="saveNotes(resp)" class="btn-save">Guardar</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p *ngIf="testExecution.executionResponsesList?.length === 0">
+        No hay respuestas registradas para esta ejecución.
+    </p>
+
+</div>

@@ -12,6 +12,8 @@ import { QuestionsComponent } from './features/questions-component/questions.com
 import { TestsComponent } from './features/tests-component/tests.component';
 import { NewTestComponent } from './features/new-test-component/new-test.component';
 import { RegisterComponent } from './features/register/register.component';
+import {TestReviewTeacherComponent} from "./features/test-review-teacher/test-review-teacher.component";
+
 
 
 export const routes: Routes = [
@@ -19,11 +21,15 @@ export const routes: Routes = [
     { path: ConstRoutes.PATH_LOGIN, component: LoginComponent },
     { path: 'home', component: HomeComponent },
     { path: 'teacher-subjects', component: TeacherSignatureComponent, data: { roles:["TEACHER"]}},
+    {path: 'test-review-teacher/:id', component: TestReviewTeacherComponent,data:{roles:['TEACHER']}},
+
     { path: 'student-subjects', component: StudentSignatureComponent, data: { roles:["PUPIL"]}},
+
     { path: 'users', component: UsersComponent, data: { roles:["ADMIN","SUPER"]} },
     { path: 'user', component: UserComponent, data: { roles:["ADMIN","SUPER"]}},
     { path: 'signatures', component: SignaturesComponent, data: { roles:["TEACHER", "ADMIN","SUPER"]}},
     { path: 'user/:id', component: UserComponent, data: { roles:["ADMIN","SUPER"]}},
+
 
     { path: 'tests', component: TestsComponent, data: { roles:["TEACHER", "ADMIN","SUPER"]}},
     { path: 'new-test', component: NewTestComponent, data: { roles:["TEACHER", "ADMIN","SUPER"]}},
