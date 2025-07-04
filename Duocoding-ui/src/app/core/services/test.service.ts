@@ -42,4 +42,7 @@ export class TestService {
     getExamStructure(testId: number): Observable<ExamStructureResponseDTO> {
         return this.http.get<ExamStructureResponseDTO>(`${this.END_POINT_URL}/${testId}/structure`);
     }
+    getAvailableTestsBySubject(subjectId: number): Observable<TestResponseDTO[]> {
+        return this.http.get<TestResponseDTO[]>(`${this.END_POINT_URL}/available/by-subject/${subjectId}`);
+    }
 }

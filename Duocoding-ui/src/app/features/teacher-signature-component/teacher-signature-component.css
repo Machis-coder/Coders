@@ -176,3 +176,63 @@
 .subject-list::-webkit-scrollbar-thumb:hover {
     background: #0056b3;
 }
+.available-tests-wrapper {
+    max-width: 1000px;
+    margin: 30px auto 40px auto;
+    padding: 20px;
+    background: #fafafa;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.available-tests-wrapper h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: #0056b3;
+    font-weight: 700;
+    user-select: none;
+}
+
+.available-tests-wrapper p {
+    font-style: italic;
+    color: #777;
+    margin-bottom: 1rem;
+}
+
+.available-tests-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.available-tests-wrapper th,
+.available-tests-wrapper td {
+    text-align: left;
+    padding: 14px 18px;
+    border-bottom: 1px solid #eee;
+    font-weight: 500;
+    color: #444;
+}
+
+.available-tests-wrapper th {
+    background-color: #022446;
+    color: white;
+    font-weight: 700;
+    user-select: none;
+}
+
+.available-tests-wrapper tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.available-tests-wrapper tr:hover {
+    background-color: #e6f0ff;
+    cursor: pointer;
+    color: #004a99;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}

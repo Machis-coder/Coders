@@ -7,15 +7,14 @@ import com.codingtrainers.duocoding.dto.output.QuestionResponseDTO;
 import com.codingtrainers.duocoding.dto.output.TestResponseDTO;
 import com.codingtrainers.duocoding.entities.*;
 
-import com.codingtrainers.duocoding.repositories.ResponseRepository;
-import com.codingtrainers.duocoding.repositories.SubjectRepository;
-import com.codingtrainers.duocoding.repositories.TestQuestionRepository;
-import com.codingtrainers.duocoding.repositories.TestRepository;
+import com.codingtrainers.duocoding.repositories.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TestService {
@@ -24,6 +23,8 @@ public class TestService {
     private final SubjectRepository subjectRepository;
     private final TestQuestionRepository testQuestionRepository;
     private final ResponseRepository responseRepository;
+    @Autowired
+    TestSubjectRepository testSubjectRepository;
 
     public TestService(TestRepository testRepository,
                        SubjectRepository subjectRepository,
@@ -193,6 +194,23 @@ public class TestService {
 
         return dto;
     }
+
+    public List<TestResponseDTO> getAvailableTestsBySubject(Long subjectId) {
+        List<Test> tests = testRepository.findBySubjectIdAndActiveTrue(subjectId);
+
+        return tests.stream().map(test -> {
+            List<QuestionResponseDTO> questions = getQuestionsForTest(test.getId());
+            return new TestResponseDTO(
+                    test.getId(),
+                    test.getName(),
+                    test.getDescription(),
+                    test.getActive(),
+                    test.getSubject() != null ? test.getSubject().getId() : null,
+                    questions
+            );
+        }).collect(Collectors.toList());
+    }
+
 }
 
     

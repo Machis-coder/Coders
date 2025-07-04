@@ -1,6 +1,7 @@
 package com.codingtrainers.duocoding.repositories;
 
 
+import com.codingtrainers.duocoding.dto.output.TestResponseDTO;
 import com.codingtrainers.duocoding.entities.TestQuestion;
 
 import java.util.List;

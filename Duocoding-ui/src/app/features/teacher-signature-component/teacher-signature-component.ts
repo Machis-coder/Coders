@@ -9,6 +9,8 @@ import {getUser} from "../../core/services/utils.service";
 import {TestexecutionService} from "../../core/services/testexecution.service";
 import {HomeNavigationComponent} from "../../shared/components/home-navigation-component/home-navigation-component";
 import {TestExecutionGeneralDTO} from "../../interfaces/TestExecutionGeneralDTO";
+import {TestService} from "../../core/services/test.service";
+import {TestResponseDTO} from "../../interfaces/TestResponseDTO";
 
 @Component({
   selector: 'app-teacher-signature',
@@ -22,6 +24,7 @@ export class TeacherSignatureComponent extends BasePage implements OnInit {
   userSubjectService = inject(UserSubjectService);
   router = inject(Router);
   testExecutionService = inject(TestexecutionService);
+  testService= inject(TestService);
 
   subjects: UserSubjectResponseDTO[] = [];
   selectedSubjectId: number | null = null;
@@ -36,6 +39,11 @@ export class TeacherSignatureComponent extends BasePage implements OnInit {
   errorExecutions: string | null = null;
 
   selectedStudentId: number | null = null;
+
+  availableTests: TestResponseDTO[] = [];
+  loadingTests = false;
+  errorTests: string | null = null;
+  testsWereLoaded = false;
 
   ngOnInit(): void {
     super.ngOnInit();
@@ -89,10 +97,29 @@ export class TeacherSignatureComponent extends BasePage implements OnInit {
       }
     });
   }
+  loadAvailableTests(subjectId: number) {
+    this.loadingTests = true;
+    this.errorTests = null;
 
-  onSubjectDblClick(subject: UserSubjectResponseDTO) {
-    this.router.navigate(['/signature-test', subject.subjectId]);
+    this.testService.getAvailableTestsBySubject(subjectId).subscribe({
+      next: data => {
+        console.log('Tests disponibles recibidos:', data);
+        this.availableTests = data || [];
+        this.loadingTests = false;
+      },
+      error: err => {
+        console.error('Error al cargar tests disponibles', err);
+        this.errorTests = 'Error al cargar tests disponibles';
+        this.loadingTests = false;
+      }
+    });
   }
+  onSubjectDblClick(subject: UserSubjectResponseDTO) {
+    this.selectedSubjectId = subject.subjectId;
+    this.testsWereLoaded = true;
+    this.loadAvailableTests(subject.subjectId);
+  }
+
   onStudentDblClick(student: UserSubjectResponseDTO) {
     this.selectedStudentId = student.userId;
     if(this.selectedSubjectId && this.selectedStudentId) {
@@ -102,5 +129,9 @@ export class TeacherSignatureComponent extends BasePage implements OnInit {
 
     onExecutionClick(execution: TestExecutionGeneralDTO) {
     this.router.navigate(['/test-review-teacher',execution.id]);
+  }
+  onAvailableTestClick(test: TestResponseDTO) {
+    // this.router.navigate(['/test-detail-view', test.id]); // Esperando implementación
+    console.log('Vista de test no implementada aún, test ID:', test.id);
   }
 }
