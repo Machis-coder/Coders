@@ -2,6 +2,7 @@ import {HttpHeaders, HttpParams} from "@angular/common/http";
 import ConstUrls from "../../shared/contants/const-urls";
 import ConstLocalStorage from "../../shared/contants/const-local-storage";
 import { User } from "src/app/interfaces/user";
+import {UserResponseDTO} from "../../interfaces/UserResponseDTO";
 
 export default async function to(promise: Promise<any>) {
     try {
@@ -36,16 +37,15 @@ export const headers = new HttpHeaders({
 });
 
 export function loadCredentials(): HttpParams {
-    const loggedUser: User = getUser();
+    const loggedUser: UserResponseDTO = getUser();
     return new HttpParams()
         .set(ConstUrls.NICK_USUARIO_PARAM, loggedUser.username)
-        .set(ConstUrls.PASS_USUARIO_PARAM, loggedUser.password);
 }
 
-export function storeUser(user: User) {
+export function storeUser(user: UserResponseDTO) {
     localStorage.setItem(ConstLocalStorage.USER_INFO, JSON.stringify(user));
 }
 
-export function getUser(): User {
+export function getUser(): UserResponseDTO {
     return JSON.parse(localStorage.getItem(ConstLocalStorage.USER_INFO));
 }

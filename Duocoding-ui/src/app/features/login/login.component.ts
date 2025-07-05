@@ -11,6 +11,7 @@ import {
 import { User } from 'src/app/interfaces/user';
 import { LoginService } from 'src/app/core/services/login.service';
 import { ButtonComponent } from 'src/app/shared/components/button-component/button-component';
+import {UserResponseDTO} from "../../interfaces/UserResponseDTO";
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
   username = '';
   password = '';
   error = '';
-  usuarioLogado: User;
+  usuarioLogado: UserResponseDTO;
 
   constructor(private loginService: LoginService, private router: Router) {
 
@@ -54,6 +55,6 @@ export class LoginComponent implements OnInit {
     });
   }
   goToRegister() {
-  this.router.navigate(['/register']); // Ruta al formulario de registro
+  this.router.navigate(['/register']);
 }
 }
