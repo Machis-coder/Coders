@@ -3,6 +3,9 @@ package com.codingtrainers.duocoding.dto.output;
 import com.codingtrainers.duocoding.entities.Role;
 import com.codingtrainers.duocoding.entities.User;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class UserResponseDTO {
     private Long id;
     private String name;
@@ -11,6 +14,7 @@ public class UserResponseDTO {
     private Role role;
     private String dni;
     private String username;
+    private LocalDate birthday;
 
     public UserResponseDTO(User user) {
         this.id = user.getId();
@@ -20,6 +24,15 @@ public class UserResponseDTO {
         this.role = user.getRole();
         this.dni = user.getDni();
         this.username = user.getUsername();
+        this.birthday = user.getBirthday();
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
     }
 
     public String getUsername() {

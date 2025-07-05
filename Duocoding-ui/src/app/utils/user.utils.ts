@@ -1,13 +1,14 @@
 import { getUser } from "../core/services/utils.service";
 import { User } from "../interfaces/user";
+import {UserResponseDTO} from "../interfaces/UserResponseDTO";
 
 export const isUserLogged = () => {
-    const user: User = getUser()
+    const user: UserResponseDTO = getUser()
     return user && user !== null;
 }
 
 export const userRole = () => {
-    const user: User = getUser()
+    const user: UserResponseDTO = getUser()
     return user && user !== null? user.role: '' ;
 }
 
