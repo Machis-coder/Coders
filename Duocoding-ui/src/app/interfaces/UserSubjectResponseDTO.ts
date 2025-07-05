@@ -8,4 +8,5 @@ export interface UserSubjectResponseDTO {
     email?: string;
     dni: string;
     name: string;
+    active: boolean;
 }
