@@ -48,7 +48,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let execution of testExecutions">
+        <tr *ngFor="let execution of testExecutions"
+            (click)="onExecutionClick(execution)"
+            style="cursor: pointer;">
             <td>{{ execution.testName }}</td>
             <td>{{ execution.result }}%</td>
             <td>{{ execution.startTime | date: 'short' }}</td>

@@ -89,4 +89,7 @@ export class SignatureTestComponent extends BasePage implements OnInit {
     // Aquí puedes dejarlo preparado para redirigir a detalle
     // this.router.navigate(['/test-detail', test.id]);
   }
+  onExecutionClick(execution: TestExecutionGeneralDTO) {
+    this.router.navigate(['/test-review-student', execution.id]);
+  }
 }

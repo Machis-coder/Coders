@@ -14,6 +14,7 @@ import { NewTestComponent } from './features/new-test-component/new-test.compone
 import { RegisterComponent } from './features/register/register.component';
 import {TestReviewTeacherComponent} from "./features/test-review-teacher/test-review-teacher.component";
 import {SignatureTestComponent} from "./features/signature-test/signature-test.component";
+import {TestReviewStudentComponent} from "./features/test-review-student/test-review-student.component";
 
 
 
@@ -26,6 +27,7 @@ export const routes: Routes = [
 
     { path: 'student-subjects', component: StudentSignatureComponent, data: { roles:["PUPIL"]}},
     {path: 'signature-test/:subjectId', component: SignatureTestComponent, data: { roles: ['PUPIL'] }},
+    {path: 'test-review-student/:id', component: TestReviewStudentComponent, data: {roles: ['PUPIL'] }},
 
     { path: 'users', component: UsersComponent, data: { roles:["ADMIN","SUPER"]} },
     { path: 'user', component: UserComponent, data: { roles:["ADMIN","SUPER"]}},
