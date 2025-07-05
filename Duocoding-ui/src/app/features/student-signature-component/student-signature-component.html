@@ -1,8 +1,8 @@
 <app-home-navigation></app-home-navigation>
 
-<ng-container class="cards-container">
+<div class="cards-container">
     <app-card *ngFor="let subject of subjects"
-          [title]="subject.subjectName"
-           [navigation]="'signature-test/'+subject.subjectId"
-        />
-</ng-container>
+              [title]="subject.subjectName"
+              [navigation]="'signature-test/' + subject.subjectId">
+    </app-card>
+</div>
