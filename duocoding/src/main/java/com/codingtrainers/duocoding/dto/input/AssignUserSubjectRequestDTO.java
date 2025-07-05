@@ -4,6 +4,7 @@ public class AssignUserSubjectRequestDTO {
     private Long userId;
     private Long subjectId;
 
+
     public AssignUserSubjectRequestDTO() {
     }
 
@@ -11,6 +12,7 @@ public class AssignUserSubjectRequestDTO {
         this.userId = userId;
         this.subjectId = subjectId;
     }
+
 
     public Long getUserId() {
         return userId;

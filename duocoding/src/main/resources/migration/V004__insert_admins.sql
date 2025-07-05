@@ -1,0 +1,2 @@
+INSERT INTO user (id, name, surname, email, username, password, birthday, dni, role, active) VALUES  (18,'Juan', 'Pérez', 'juanpA@example.com', 'admin', SHA2("admin", 256), '1980-01-01', '12345678A', 'SUPERADMIN', TRUE);
+INSERT INTO user (id, name, surname, email, username, password, birthday, dni, role, active) VALUES (19,'Laura', 'García', 'lauragA@example.com', 'admin2', SHA2("admin2", 256), '1985-05-20', '87654321B', 'ADMIN', TRUE);
