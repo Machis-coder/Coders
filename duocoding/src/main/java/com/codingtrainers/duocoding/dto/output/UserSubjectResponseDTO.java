@@ -14,6 +14,7 @@ public class UserSubjectResponseDTO {
         private String email;
         private String dni;
         private String name;
+        private Boolean active;
 
         public UserSubjectResponseDTO(UserSubject us) {
             this.userId = us.getUser().getId();
@@ -25,7 +26,17 @@ public class UserSubjectResponseDTO {
             this.email = us.getUser().getEmail();
             this.dni = us.getUser().getDni();
             this.name = us.getUser().getName();
+            this.active = us.getActive();
         }
+        public UserSubjectResponseDTO() {}
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
     public String getName() {
         return name;
