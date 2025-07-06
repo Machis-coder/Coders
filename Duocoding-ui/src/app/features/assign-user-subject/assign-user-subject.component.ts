@@ -13,8 +13,8 @@ import {HomeNavigationComponent} from "../../shared/components/home-navigation-c
   selector: 'app-assign-user-subject',
   standalone: true, //
   imports: [CommonModule, FormsModule, HomeNavigationComponent],
-  templateUrl: './assign-usersubject.component.html',
-  styleUrls: ['./assign-usersubject.component.css']
+  templateUrl: './assign-user-subject.component.html',
+  styleUrls: ['./assign-user-subject.component.css']
 })
 export class AssignUserSubjectComponent implements OnInit {
   userId: number = null;

@@ -15,7 +15,7 @@ import { RegisterComponent } from './features/register/register.component';
 import {TestReviewTeacherComponent} from "./features/test-review-teacher/test-review-teacher.component";
 import {SignatureTestComponent} from "./features/signature-test/signature-test.component";
 import {TestReviewStudentComponent} from "./features/test-review-student/test-review-student.component";
-import {AssignUserSubjectComponent} from "./features/assign-usersubject/assign-usersubject.component";
+import {AssignUserSubjectComponent} from "./features/assign-user-subject/assign-user-subject.component";
 
 
 
@@ -30,17 +30,17 @@ export const routes: Routes = [
     {path: 'signature-test/:subjectId', component: SignatureTestComponent, data: { roles: ['PUPIL'] }},
     {path: 'test-review-student/:id', component: TestReviewStudentComponent, data: {roles: ['PUPIL'] }},
 
-    {path: 'assign-user-subjects', component: AssignUserSubjectComponent, data: { roles: ['ADMIN', 'SUPER']}},
-    { path: 'users', component: UsersComponent, data: { roles:["ADMIN","SUPER"]} },
-    { path: 'user', component: UserComponent, data: { roles:["ADMIN","SUPER"]}},
-    { path: 'signatures', component: SignaturesComponent, data: { roles:["TEACHER", "ADMIN","SUPER"]}},
-    { path: 'user/:id', component: UserComponent, data: { roles:["ADMIN","SUPER"]}},
+    {path: 'assign-user-subject', component: AssignUserSubjectComponent, data: { roles: ['ADMIN', 'SUPERADMIN']}},
+    { path: 'users', component: UsersComponent, data: { roles:["ADMIN","SUPERADMIN"]} },
+    { path: 'user', component: UserComponent, data: { roles:["ADMIN","SUPERADMIN"]}},
+    { path: 'signatures', component: SignaturesComponent, data: { roles:["TEACHER", "ADMIN","SUPERADMIN"]}},
+    { path: 'user/:id', component: UserComponent, data: { roles:["ADMIN","SUPERADMIN"]}},
 
 
-    { path: 'tests', component: TestsComponent, data: { roles:["TEACHER", "ADMIN","SUPER"]}},
-    { path: 'new-test', component: NewTestComponent, data: { roles:["TEACHER", "ADMIN","SUPER"]}},
+    { path: 'tests', component: TestsComponent, data: { roles:["TEACHER", "ADMIN","SUPERADMIN"]}},
+    { path: 'new-test', component: NewTestComponent, data: { roles:["TEACHER", "ADMIN","SUPERADMIN"]}},
 
-    { path: 'questions', component: QuestionsComponent, data: { roles:["TEACHER", "ADMIN","SUPER"]}},
+    { path: 'questions', component: QuestionsComponent, data: { roles:["TEACHER", "ADMIN","SUPERADMIN"]}},
 
     { path: ConstRoutes.PATH_FORBIDDEN, component: ForbiddenComponent},
     { path: 'register', component: RegisterComponent },
