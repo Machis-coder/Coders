@@ -11,7 +11,7 @@ import { BasePage } from '../base.page';
 import { Router } from '@angular/router';
 import { HomeNavigationComponent } from 'src/app/shared/components/home-navigation-component/home-navigation-component';
 import { SubjectResponseDTO } from 'src/app/interfaces/subjectResponseDTO';
-import { SubjectService } from 'src/app/core/services/subjectservice';
+import { SubjectService } from 'src/app/core/services/subject.service';
 import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { SubjectRequestDTO } from 'src/app/interfaces/subjectRequestDTO';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -71,7 +71,7 @@ export class SignaturesComponent extends BasePage {
 
 
 
-  //asignautras
+
   
  loadSubjects() {
   this.subjectService.findSubjects().subscribe({

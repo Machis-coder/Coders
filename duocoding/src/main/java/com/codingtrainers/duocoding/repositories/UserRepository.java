@@ -9,9 +9,9 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query("SELECT u FROM User u WHERE u.active = true and u.role != 'SUPER'")
+    @Query("SELECT u FROM User u WHERE u.active = true and u.role != 'SUPERADMIN'")
     List<User> findAllByActiveTrueExceptSuper();
-    @Query("SELECT u FROM User u WHERE u.active = false and u.role != 'SUPER'")
+    @Query("SELECT u FROM User u WHERE u.active = false and u.role != 'SUPERADMIN'")
     List<User> findAllByActiveFalse();
 
     User save(User user);

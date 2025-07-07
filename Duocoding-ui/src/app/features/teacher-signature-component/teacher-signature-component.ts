@@ -136,7 +136,7 @@ export class TeacherSignatureComponent extends BasePage implements OnInit {
   }
 
   onAvailableTestClick(test: TestResponseDTO) {
-    // this.router.navigate(['/test-detail-view', test.id]); // Esperando implementación
+    this.router.navigate(['/new-test', test.id]);
     console.log('Vista de test no implementada aún, test ID:', test.id);
   }
 }

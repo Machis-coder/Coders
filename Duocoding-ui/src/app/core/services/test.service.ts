@@ -6,6 +6,7 @@ import {Observable} from "rxjs";
 import {TestResponseDTO} from "../../interfaces/TestResponseDTO";
 import {TestRequestDTO} from "../../interfaces/testRequestDTO";
 import {ExamStructureResponseDTO} from "../../interfaces/examStructureResponseDTO";
+import { Test } from 'src/app/interfaces/test';
 
 @Injectable ({
     providedIn: 'root'
@@ -23,8 +24,32 @@ export class TestService {
         return this.http.get<TestResponseDTO>(`${this.END_POINT_URL}/${testId}`);
     }
 
-    createTest(testDetails: TestRequestDTO): Observable<TestResponseDTO> {
-        return this.http.post<TestResponseDTO>(`${this.END_POINT_URL}/create`, testDetails);
+    findAll() {
+        return this.http.get<Test[]>(this.END_POINT_URL, {
+            //headers: headers,
+            observe: 'response'
+        });
+    }
+
+    findTest(id: number) {
+        return this.http.get<Test>(this.END_POINT_URL + '/' + id, {
+            //headers: headers,
+            observe: 'response'
+        });
+    }
+
+    findTestToPerform(id: number) {
+        return this.http.get<Test>(this.END_POINT_URL + '/' + id + '/perform', {
+            //headers: headers,
+            observe: 'response'
+        });
+    }
+
+    save(test: Test) {
+        return this.http.post<Test>(this.END_POINT_URL + '/',test, {
+            //headers: headers,
+            observe: "response",
+        });
     }
 
     updateTest(id: number, testDetails: TestRequestDTO): Observable<TestResponseDTO> {

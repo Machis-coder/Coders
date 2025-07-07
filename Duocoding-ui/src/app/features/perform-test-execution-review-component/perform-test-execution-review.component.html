@@ -1,0 +1,8 @@
+<app-home-navigation/>
+<div class="user-container">
+    <h2>Revision de Test</h2>
+    <app-test-execution-review [id]="id" [subject]="subject" [name]="name" [description]="description"
+    [username]="userName" [result]="result"
+    [questions]="questions" (onsave)="onSave($event)" />
+
+</div>

@@ -1,9 +1,10 @@
 
 <app-home-navigation/>
-<app-table [data] = userList
-    [headers] = "['name', 'surname', 'dni', 'role']"
-    [rowkey] = "'id'"
-    (rowDblClick) = "gotoEdit($event)"
+<app-table [data] = questionList
+           [headers] = "['type', 'description', 'active']"
+           [rowkey] = "'id'"
+           (rowDblClick) = "gotoEdit($event)"
 />
-
-<button (click)="gotoNew()">New User</button>
+<section style="width: 20%;">
+    <app-button (click)="gotoNew()" [text]="'New Question'"/>
+</section>

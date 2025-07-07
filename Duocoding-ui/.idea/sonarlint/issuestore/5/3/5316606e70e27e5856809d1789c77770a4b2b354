@@ -1,0 +1,11 @@
+
+typescript:S11728"eRemove the unused function parameter "changes" or rename it to "_changes" to make intention explicit.(ó•ÅÚ
+Ftypescript:S125A"Remove this commented out code.(õîÚµøÿÿÿÿ8¸Ë‰Œş2
+Ftypescript:S125G"Remove this commented out code.(õîÚµøÿÿÿÿ8¶ì‰Œş2
+Ftypescript:S125L"Remove this commented out code.(õîÚµøÿÿÿÿ8Œ“ŠŒş2
+Ftypescript:S125U"Remove this commented out code.(õîÚµøÿÿÿÿ8›ÍŠŒş2
+qtypescript:S2201Z"UConsider using "forEach" instead of "map" as its return value is not being used here.(ÑÕû¯
+Ftypescript:S125]"Remove this commented out code.(õîÚµøÿÿÿÿ8Ã‹Œş2
+Gtypescript:S125„"Remove this commented out code.(õîÚµøÿÿÿÿ8Ã—ŒŒş2
+@typescript:S125š"Remove this commented out code.(›ûĞ¡úÿÿÿÿ
+;typescript:S125®"Remove this commented out code.(ŸííÙ

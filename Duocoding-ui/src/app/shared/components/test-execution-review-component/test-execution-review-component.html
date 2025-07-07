@@ -1,0 +1,40 @@
+<div class="question-container">
+    <section>
+        <label>Subject: </label>
+        <input disabled type="text" [value]="subject"/>
+    </section>
+    <section>
+        <label>Name: </label>
+        <input disabled type="text" [value]="nameInternal"/>
+    </section>
+    <section>
+        <label>Description: </label>
+        <input disabled type="text" [value]="description"/>
+    </section>
+    <section>
+        <label>Alumno: </label>
+        <input disabled type="text" [value]="username"/>
+    </section>
+    <section>
+        <label>Resultado: </label>
+        <input disabled type="text" [value]="result + '%'"/>
+    </section>
+    <ng-container *ngIf="question !== undefined">
+        <h2>Preguntas:</h2>        
+        <ng-container style="height: max-700px;overflow-y: auto;">            
+            <ng-container>            
+                <app-question-execution-review [id]="question.id" [order]="question.order" [type]="question.type" [description]="question.description"
+                                               [responses]="question.responses" [answer]="question.answer" [userAnswer]="question.userAnswer"
+                [correct]="question.correct"
+                (onback)="goprevious($event)"
+                (onnext)="gonext($event)"
+                (onsave)="saveQuestion($event)" />
+            </ng-container>
+        </ng-container>        
+    </ng-container>
+    
+    <!--section class="buttons-container" id="buttons">
+        <app-button [class]="'button'" [text]="'Clean'" (click)="$event.stopPropagation();oncleanpush();"/>
+        <app-button [class]="'button'" [text]="'Save'"  (click)="$event.stopPropagation();onsavepush(); "/>
+    </section-->
+</div>

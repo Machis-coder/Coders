@@ -4,11 +4,13 @@ import { UserService } from 'src/app/core/services/user.service';
 import { User } from 'src/app/interfaces/user';
 import { ButtonComponent } from "../../shared/components/button-component/button-component";
 import { FormsModule } from '@angular/forms';
+import {CommonModule} from "@angular/common";
+import Role from "../../roles";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
-  imports: [ButtonComponent, FormsModule]
+  imports: [CommonModule, ButtonComponent, FormsModule]
 })
 export class RegisterComponent {
 
@@ -33,7 +35,7 @@ export class RegisterComponent {
   onRegister() {
     this.errorMessage = '';
     this.successMessage = '';
-
+    this.user.role = Role.PUPIL;
     this.userService.save(this.user).subscribe({
       next: response => {
         if (response.status === 201) {

@@ -1,22 +1,27 @@
 .back-container {
-  max-width: 300px;
-  /*min-width: 300px;*/
-  /*margin: 5px; */
-  /*padding: 0px;*/
-  /*border: 1px solid #ccc;
+  display: inline-block;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
   border-radius: 8px;
-  background-color: #f9f9f9;*/
+  background-color: #e9f0f7;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  font-family: 'Segoe UI', sans-serif;
+  color: #2c3e50;
 }
 
 .back-container:hover {
-  max-width: 300px;
-  /*margin: 5px;*/
-  /*padding: 1px;
-  border: 1px solid #ccc;
-  border-radius: 8px;*/
-  background-color: lightgray;
+  background-color: #d0e4f2;
+  transform: translateX(-2px);
 }
 
-h2, p {
-  text-align: left;
+.back-container h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+

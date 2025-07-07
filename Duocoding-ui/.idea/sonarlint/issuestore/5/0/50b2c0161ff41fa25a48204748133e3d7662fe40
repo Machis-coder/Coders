@@ -1,0 +1,9 @@
+
+Btypescript:S1128"&Remove this unused import of 'OnInit'.(¡ÒÎÏ
+Etypescript:S1128"$Remove this unused import of 'User'.(Öëåüÿÿÿÿ
+Dtypescript:S1128"(Remove this unused import of 'Question'.(ËÈıš
+Ntypescript:S1128"-Remove this unused import of 'TestExecution'.(•Ó±Ãùÿÿÿÿ
+Ntypescript:S1128"+Remove this unused import of 'ConstRoutes'.(á²¨ù8àó‹ş2
+Atypescript:S8789"!Unexpected use of comma operator.(¬×õüÿÿÿÿ
+‚typescript:S1172J"_Remove the unused function parameter "test" or rename it to "_test" to make intention explicit.(ı¢Ø¸8àó‹ş2
+Dtypescript:S1186J"!Unexpected empty method 'onSave'.(ı¢Ø¸8àó‹ş2

@@ -5,6 +5,7 @@ package com.codingtrainers.duocoding.services;
 import com.codingtrainers.duocoding.dto.input.TestRequestDTO;
 import com.codingtrainers.duocoding.dto.output.ExamStructureResponseDTO;
 import com.codingtrainers.duocoding.dto.output.QuestionResponseDTO;
+import com.codingtrainers.duocoding.dto.output.TestDTO;
 import com.codingtrainers.duocoding.dto.output.TestResponseDTO;
 import com.codingtrainers.duocoding.entities.*;
 import com.codingtrainers.duocoding.repositories.ResponseRepository;
@@ -111,7 +112,7 @@ public class TestServiceTest {
 
     @Test
     void createTest_Success() {
-        TestRequestDTO requestDTO = new TestRequestDTO();
+        TestDTO requestDTO = new TestDTO();
         requestDTO.setName("New Test");
         requestDTO.setDescription("New Description");
         requestDTO.setActive(true);
@@ -124,20 +125,15 @@ public class TestServiceTest {
         when(subjectRepository.findByIdAndActiveTrue(1L)).thenReturn(Optional.of(subject));
         when(testRepository.save(any(com.codingtrainers.duocoding.entities.Test.class))).thenReturn(savedTest);
 
-        TestResponseDTO result = testService.createTest(requestDTO);
+        testService.createTest(requestDTO);
 
-        assertNotNull(result);
-        assertEquals("New Test", result.getName());
-        assertEquals("New Description", result.getDescription());
-        assertEquals(1L, result.getSubjectId());
-        assertTrue(result.getActive());
         verify(subjectRepository, times(1)).findByIdAndActiveTrue(1L);
         verify(testRepository, times(1)).save(any(com.codingtrainers.duocoding.entities.Test.class));
     }
 
     @Test
     void createTest_SubjectNotFound_ThrowsException() {
-        TestRequestDTO requestDTO = new TestRequestDTO();
+        TestDTO requestDTO = new TestDTO();
         requestDTO.setName("New Test");
         requestDTO.setDescription("New Description");
         requestDTO.setActive(true);

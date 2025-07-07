@@ -1,0 +1,8 @@
+<div>
+<app-home-navigation />
+<section >
+    <div style="max-width: 600px;margin: 10px auto;">
+        <app-question [id]="id" [type]="type" [description]="description" [responses]="responses" [answer]="answer" (onsave)="save($event); $event.stopPropagation();" />
+    </div>
+</section>
+

@@ -56,21 +56,32 @@ public class UserSubjectCotroller {
         }
     }
     @PutMapping("/activate")
-    public ResponseEntity<UserSubject> activateRelation(@RequestBody AssignUserSubjectRequestDTO dto) {
-            try {
-                UserSubject us = userSubjectService.reactivateRelation(dto.getUserId(), dto.getSubjectId());
-                return ResponseEntity.ok(us);
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
-        }
-    @PutMapping("/delete")
-    public ResponseEntity<UserSubject> deleteRelation(@RequestBody AssignUserSubjectRequestDTO dto) {
+    public ResponseEntity<?> activateRelation(@RequestBody AssignUserSubjectRequestDTO dto) {
         try {
-            UserSubject us = userSubjectService.deleteRelation(dto.getUserId(), dto.getSubjectId());
-            return ResponseEntity.ok(us);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            UserSubject us = userSubjectService.reactivateRelation(dto.getUserId(), dto.getSubjectId());
+            return ResponseEntity.ok(new UserSubjectResponseDTO(us));
+        } catch (RuntimeException e) {
+            if (e.getMessage().contains("Relation not found")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Relación no encontrada.");
+            }
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inesperado.");
         }
     }
+
+
+    @PutMapping("/delete")
+    public ResponseEntity<?> deleteRelation(@RequestBody AssignUserSubjectRequestDTO dto) {
+        try {
+            UserSubject us = userSubjectService.deleteRelation(dto.getUserId(), dto.getSubjectId());
+            return ResponseEntity.ok(new UserSubjectResponseDTO(us));
+        } catch (RuntimeException e) {
+            if (e.getMessage().contains("Active relation not found")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No hay relación activa.");
+            }
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inesperado.");
+        }
+    }
+
 }

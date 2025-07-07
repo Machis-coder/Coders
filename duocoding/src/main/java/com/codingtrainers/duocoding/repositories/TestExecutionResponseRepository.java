@@ -35,6 +35,8 @@ public interface TestExecutionResponseRepository extends CrudRepository<TestExec
     @Query("SELECT ter FROM TestExecutionResponse ter WHERE ter.id = :id AND ter.active = true")
     Optional<TestExecutionResponse> findActiveById(@Param("id") Long id);
 
+    List<TestExecutionResponse> findByTestExecution(TestExecution testExecution);
+
 
 
 }

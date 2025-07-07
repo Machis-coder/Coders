@@ -12,13 +12,16 @@ import java.util.Optional;
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 
-    @Query("SELECT q FROM Question q WHERE q.id IN :ids AND q.active = true")
-    List<Question> findAllActiveByIdIn(@Param("ids") List<Long> ids);
+    @Query("select q from Question q where q.test.id = :testId")
+    List<Question> findAllByTestId(@Param("testId") Long testId);
 
     List<Question> findAllByActiveTrue();
 
     Optional<Question> findByIdAndActiveTrue(Long id);
 
     List<Question>findAllByActiveFalse();
+
+    @Query("SELECT q FROM Question q WHERE q.id IN :ids AND q.active = true")
+    List<Question> findAllActiveByIdIn(@Param("ids") List<Long> ids);
 }
 

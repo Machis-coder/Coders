@@ -10,20 +10,24 @@ import {
 import { BasePage } from '../base.page';
 import { Router } from '@angular/router';
 import { HomeNavigationComponent } from 'src/app/shared/components/home-navigation-component/home-navigation-component';
+import {TestService} from "../../core/services/test.service";
+import {Test} from "../../interfaces/test";
+import ConstRoutes from "../../shared/contants/const-routes";
+import {ButtonComponent} from "../../shared/components/button-component/button-component";
 
 
 @Component({
   selector: 'app-tests',
   standalone: true,
-  imports: [CommonModule, TableComponent, HomeNavigationComponent],
+  imports: [CommonModule, TableComponent, HomeNavigationComponent, ButtonComponent],
   templateUrl: './tests.component.html',
   styleUrl: './tests.component.css'
 })
 export class TestsComponent extends BasePage {
-  userList: User[] = [];
+  list: Test[] = [];
   
   router: Router = inject(Router);
-  userService: UserService = inject(UserService);
+  testService: TestService = inject(TestService);
 
 
   ngOnInit() {
@@ -32,10 +36,10 @@ export class TestsComponent extends BasePage {
   }
   
   loadUsers() {
-    this.userService.findUsers().subscribe({
+    this.testService.findAll().subscribe({
       next: (response) => {
         if (isOkResponse(response)) {
-          this.userList = loadResponseData(response);
+          this.list = loadResponseData(response);
         } else {
           //this.error = loadResponseError(response);
         }
@@ -48,11 +52,11 @@ export class TestsComponent extends BasePage {
   } 
 
   gotoEdit(id) {
-    this.router.navigate(['/user/' + id]);
+    this.navigateTo(ConstRoutes.PATH_NEW_TEST + '/'+ id);
   }
 
   gotoNew() {
-    this.router.navigate(['/user']);
+    this.navigateTo(ConstRoutes.PATH_NEW_TEST);
   }
 
 }

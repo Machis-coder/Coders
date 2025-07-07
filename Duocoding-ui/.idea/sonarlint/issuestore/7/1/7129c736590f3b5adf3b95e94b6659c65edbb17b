@@ -1,0 +1,5 @@
+
+typescript:S11725"eRemove the unused function parameter "changes" or rename it to "_changes" to make intention explicit.(ó•ÅÚ
+qtypescript:S2201M"UConsider using "forEach" instead of "map" as its return value is not being used here.(ÑÕû¯
+@typescript:S125"Remove this commented out code.(›ûĞ¡úÿÿÿÿ
+;typescript:S125¡"Remove this commented out code.(ŸííÙ

@@ -1,0 +1,33 @@
+<div [class]="'question-container'">
+    <section class="horizontal-content" [ngClass]="correct?'green':'red'">
+        <label>{{order}}</label>    
+    </section>
+    <section>
+        <h3>Pregunta:</h3>        
+        <label>{{descriptionInternal}}</label>
+    </section>
+    <ng-container *ngIf="showResponses">
+        <div class="buttons-container">
+            <h3>Respuestas:</h3>            
+        </div>
+        <ng-container *ngFor="let response of responsesList">            
+            <app-response-execution-review [checked]="response.checked" [text]="response.description" [order]="response.order" [type]="typeInternal" [correct]="response.correct"
+            (remove)="removeResponse(response)" 
+            (changeSelection)="responseChangeSelection($event)"
+            (changeText)="saveResponse($event)"/>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="!showResponses">
+        <h3>Respuesta:</h3>
+        <textarea [disabled]="true" disabled [(ngModel)]="userAnswer" placeholder="Answer" (change)="answerchange($event)"></textarea>
+    </ng-container>
+    <ng-container>
+        <h3>Respuesta Correcta:</h3>
+        <textarea [disabled]="true" disabled [(ngModel)]="answerInternal" placeholder="Answer" ></textarea>
+    </ng-container>
+    <section class="buttons-container" id="buttons">
+        <app-button [class]="'button'" [text]="'<'" [size]="ButtonSize.MEDIUM" (click)="$event.stopPropagation();onbackpush();"/>
+        <app-button [class]="'button'" [text]="'>'"  [size]="ButtonSize.MEDIUM" (click)="$event.stopPropagation();onnextpush(); "/>
+    </section>
+</div>
