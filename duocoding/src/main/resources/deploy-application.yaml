@@ -6,9 +6,9 @@ spring:
   application:
     name: duocoding
   datasource:
-    url: jdbc:mysql://localhost:3306/duocoding
-    username: root
-    password: admin
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/${DB_NAME:duocoding}
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:admin}
   jpa:
     hibernate:
       ddl-auto: none
