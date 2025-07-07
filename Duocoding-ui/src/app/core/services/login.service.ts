@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import to, {headers} from "./utils.service";
-import ConstUrls from "../../shared/contants/const-urls";
+import ConstUrls from "../../shared/constants/const-urls";
 import { User } from 'src/app/interfaces/user';
 import {UserResponseDTO} from "../../interfaces/UserResponseDTO";
 

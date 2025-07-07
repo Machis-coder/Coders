@@ -7,12 +7,13 @@ import { Question } from 'src/app/interfaces/question';
 import { BasePage } from 'src/app/features/base.page';
 import { Subject } from 'src/app/interfaces/subject';
 import { validateQuestion } from 'src/app/utils/question.utils';
-import { QuestionExecutionComponent } from './question-execution-component';
+
+import {QuestionComponent} from "../question-component/question-component";
 
 @Component({
   selector: 'app-test-execution',
   standalone: true,
-  imports: [CommonModule, QuestionExecutionComponent, ButtonComponent, FormsModule ],
+  imports: [CommonModule, ButtonComponent, FormsModule, QuestionComponent],
   templateUrl: './test-execution-component.html',
   styleUrl: './test-execution-component.css'
 })

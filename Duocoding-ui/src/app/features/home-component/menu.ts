@@ -1,4 +1,4 @@
-import ConstRoutes from "../../shared/contants/const-routes";
+import ConstRoutes from "../../shared/constants/const-routes";
 import {pages} from "../../pages.permissions";
 
 export const menu = [

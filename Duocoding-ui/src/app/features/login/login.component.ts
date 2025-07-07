@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import ConstRoutes from "../../shared/contants/const-routes";
+import ConstRoutes from "../../shared/constants/const-routes";
 import {FormsModule} from "@angular/forms";
 import {
   storeUser,

@@ -9,7 +9,7 @@ import {CommonModule} from "@angular/common";
 import {BasePage} from "../base.page";
 import {HomeNavigationComponent} from "../../shared/components/home-navigation-component/home-navigation-component";
 import {userId} from "../../utils/user.utils";
-import ConstRoutes from "../../shared/contants/const-routes";
+import ConstRoutes from "../../shared/constants/const-routes";
 
 
 @Component({
@@ -17,7 +17,7 @@ import ConstRoutes from "../../shared/contants/const-routes";
   standalone: true,
   templateUrl: './signature-test.component.html',
   styleUrls: ['./signature-test.component.css'],
-  imports: [CommonModule, HomeNavigationComponent],
+  imports: [CommonModule],
 })
 export class SignatureTestComponent extends BasePage implements OnInit {
   route = inject(ActivatedRoute);
@@ -55,16 +55,16 @@ export class SignatureTestComponent extends BasePage implements OnInit {
 
   loadAvailableTests(subjectId: number) {
     this.loadingTests = true;
-    console.log('Cargando tests para subjectId:', subjectId); // <-- AÑADIR
+    console.log('Cargando tests para subjectId:', subjectId);
 
     this.testService.getAvailableTestsBySubject(subjectId).subscribe({
       next: data => {
-        console.log('Tests recibidos:', data); // <-- AÑADIR
+        console.log('Tests recibidos:', data);
         this.availableTests = data;
         this.loadingTests = false;
       },
       error: err => {
-        console.error('Error al cargar tests:', err); // <-- AÑADIR
+        console.error('Error al cargar tests:', err);
         this.errorTests = 'Error al cargar tests disponibles';
         this.loadingTests = false;
       }

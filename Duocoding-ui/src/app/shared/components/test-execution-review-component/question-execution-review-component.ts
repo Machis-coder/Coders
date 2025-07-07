@@ -138,7 +138,7 @@ export class QuestionExecutionReviewComponent implements OnInit, OnChanges {
   save() {    
     let responses = [];
 
-    //if (this.validateQuestion()) {
+
       
       if (this.shouldShowResponses()) {    
         for (let i = 0; i < this.responsesInternal.length; i++) {
@@ -158,7 +158,7 @@ export class QuestionExecutionReviewComponent implements OnInit, OnChanges {
         order: this.order
       };
 
-      //alert(JSON.stringify(question));
+
       this.onsave.emit(question);
     
   }

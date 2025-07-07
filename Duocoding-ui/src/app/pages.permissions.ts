@@ -1,5 +1,5 @@
 import Role from "./roles"
-import ConstRoutes from "./shared/contants/const-routes"
+import ConstRoutes from "./shared/constants/const-routes"
 
 export const pages = {
     [ConstRoutes.PATH_ROOT]: [],

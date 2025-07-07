@@ -11,7 +11,7 @@
             <h3>Respuestas:</h3>            
         </div>
         <ng-container *ngFor="let response of responsesList">            
-            <app-response-execution-review [checked]="response.checked" [text]="response.description" [order]="response.order" [type]="typeInternal" [correct]="response.correct"
+            <app-response-execution-review [checked]="response.checked" [text]="response.description" [order]="response.order" [type]="typeInternal" [correct]="response.checked"
             (remove)="removeResponse(response)" 
             (changeSelection)="responseChangeSelection($event)"
             (changeText)="saveResponse($event)"/>

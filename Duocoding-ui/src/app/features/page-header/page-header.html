@@ -1,4 +1,17 @@
-<section style="width: 100%; color: #000; ">
-<a style="margin-left: 5px;color: white; cursor: pointer; text-align: center;" [routerLink] = "['/']">{{title}}</a>
-<p style="float:right; margin-right: 5px; color: white;" (click)="onLogout()">{{user}}</p>
-</section>
+<header class="header">
+    <section class="header-section">
+        <div class="header-left">
+            <a [routerLink]="['/']" class="logo-link">
+                {{ title }}
+            </a>
+            <app-home-navigation></app-home-navigation>
+        </div>
+        <p class="user-info" (click)="onLogout()">
+            {{ user }}
+            <svg class="logout-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M6 3a1 1 0 0 0-1 1v2h1V4h7v8H6v-2H5v2a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H6z"/>
+                <path d="M.146 8.354a.5.5 0 0 1 0-.708L3.793 4H2.5a.5.5 0 0 1 0-1h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V5.207L.854 8.354a.5.5 0 0 1-.708 0z"/>
+            </svg>
+        </p>
+    </section>
+</header>

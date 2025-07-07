@@ -57,7 +57,6 @@ export class QuestionComponent implements OnInit, OnChanges {
     this.ngOnInit();
   }
 
-  // type events
   typechange($event) {
     this.typeInternal = $event.target.value;   
     this.showResponses = this.shouldShowResponses();    
@@ -76,7 +75,7 @@ export class QuestionComponent implements OnInit, OnChanges {
     //this.save();
   }
 
-  // Response events
+
   addResponse() {
     if (this.responsesInternal.filter(r => r.description === '').length > 0) {
       alert("Rellene primero las respuestas vacias");

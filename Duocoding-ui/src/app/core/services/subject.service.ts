@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import ConstUrls from '../../shared/contants/const-urls';
+import ConstUrls from '../../shared/constants/const-urls';
 import { SubjectRequestDTO } from 'src/app/interfaces/subjectRequestDTO';
 import { SubjectResponseDTO } from 'src/app/interfaces/subjectResponseDTO';
 import { Observable } from 'rxjs';

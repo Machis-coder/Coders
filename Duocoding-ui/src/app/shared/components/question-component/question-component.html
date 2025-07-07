@@ -1,34 +1,75 @@
 <div class="question-container">
     <section class="horizontal-content">
-        <label>{{order}}</label>
-    <select [value]="typeInternal" (change)="typechange($event)" style="width: 90%;">
-        <option *ngFor="let option of types" [value]="option">{{option}}</option>
-    </select>   
+        <label>{{ order }}</label>
+        <select
+                [value]="typeInternal"
+                (change)="typechange($event)"
+                style="width: 90%;">
+            <option *ngFor="let option of types" [value]="option">
+                {{ option }}
+            </option>
+        </select>
     </section>
+
     <section>
-        <h3>Pregunta:</h3>        
-        <textarea style="border-radius: 8;" [(ngModel)]="descriptionInternal" rows="3" placeholder="Descripcion" (change)="textchange($event);"></textarea>
+        <h3>Pregunta:</h3>
+        <textarea
+                style="border-radius: 8px;"
+                [(ngModel)]="descriptionInternal"
+                (ngModelChange)="textchange($event)"
+                rows="3"
+                placeholder="Descripción">
+    </textarea>
     </section>
+
     <ng-container *ngIf="showResponses">
         <div class="buttons-container">
             <h3>Respuestas:</h3>
-            <app-button [text]="'+'" (click)="$event.stopPropagation(); addResponse();" [size]="'MEDIUM'" [class]="'button_margin_bottom'"/>
+            <app-button
+                    text="+"
+                    class="button_margin_bottom"
+                    (click)="addResponse()">
+            </app-button>
         </div>
-        <ng-container *ngFor="let response of responsesList">            
-            <app-response [checked]="response.checked" [text]="response.description" [order]="response.order" [type]="typeInternal" 
-            (remove)="removeResponse(response)" 
-            (changeSelection)="responseChangeSelection($event)"
-            (changeText)="saveResponse($event)"/>
+
+        <ng-container *ngFor="let response of responsesList">
+            <app-response
+                    [checked]="response.checked"
+                    [text]="response.description"
+                    [order]="response.order"
+                    [type]="typeInternal"
+                    (remove)="removeResponse(response)"
+                    (changeSelection)="responseChangeSelection($event)"
+                    (changeText)="saveResponse($event)">
+            </app-response>
         </ng-container>
     </ng-container>
 
     <section id="answer">
         <h3>Respuesta correcta:</h3>
-        <input type="text" [disabled]="showResponses" [(ngModel)]="answerInternal" placeholder="Answer" (change)="answerchange($event)"/>
+        <input
+                type="text"
+                [disabled]="showResponses"
+                [(ngModel)]="answerInternal"
+                (ngModelChange)="answerchange($event)"
+                placeholder="Respuesta" />
     </section>
+
     <section class="buttons-container" id="buttons">
-        <app-button [class]="'button'" [text]="'<'" [size]="'MEDIUM'" (click)="$event.stopPropagation();onbackpush();"/>
-        <app-button [class]="'button'" [text]="'X'" [size]="'MEDIUM'" (click)="$event.stopPropagation();ondeletepush();"/>
-        <app-button [class]="'button'" [text]="'>'"  [size]="'MEDIUM'" (click)="$event.stopPropagation();onnextpush(); "/>
+        <app-button
+                text="<"
+                class="button"
+                (click)="onbackpush()">
+        </app-button>
+        <app-button
+                text="X"
+                class="button"
+                (click)="ondeletepush()">
+        </app-button>
+        <app-button
+                text=">"
+                class="button"
+                (click)="onnextpush()">
+        </app-button>
     </section>
 </div>

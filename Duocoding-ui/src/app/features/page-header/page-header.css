@@ -1,0 +1,94 @@
+.header {
+    background-color: #022446;
+    color: white;
+    width: 100%;
+    border-bottom: 2px solid #ccc;
+}
+
+.header-section {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.logo-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    background-color: transparent;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    font-family: 'Segoe UI', sans-serif;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+}
+
+.logo-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(-3px);
+}
+
+.tooltip-text {
+    position: absolute;
+    bottom: -2.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    background-color: red;
+    color: white;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+    z-index: 1000;
+}
+
+.logo-link:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+.logout-icon {
+    fill: currentColor;
+    margin-left: 6px;
+    transition: transform 0.2s ease;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    background-color: transparent;
+
+    font-family: 'Segoe UI', sans-serif;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 0.95rem;
+
+    margin: 0;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.user-info:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(-2px);
+}

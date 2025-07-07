@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import ConstUrls from "../../shared/contants/const-urls";
+import ConstUrls from "../../shared/constants/const-urls";
 import {Observable} from "rxjs";
 
 import {TestResponseDTO} from "../../interfaces/TestResponseDTO";

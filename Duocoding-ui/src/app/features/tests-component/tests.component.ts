@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { HomeNavigationComponent } from 'src/app/shared/components/home-navigation-component/home-navigation-component';
 import {TestService} from "../../core/services/test.service";
 import {Test} from "../../interfaces/test";
-import ConstRoutes from "../../shared/contants/const-routes";
+import ConstRoutes from "../../shared/constants/const-routes";
 import {ButtonComponent} from "../../shared/components/button-component/button-component";
 
 

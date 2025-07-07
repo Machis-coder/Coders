@@ -12,7 +12,7 @@ import { TestExecutionComponent } from 'src/app/shared/components/test-execution
 import { TestExecutionService } from 'src/app/core/services/test-execution.service';
 import { TestService } from 'src/app/core/services/test.service';
 import { Test } from 'src/app/interfaces/test';
-import ConstRoutes from 'src/app/shared/contants/const-routes';
+import ConstRoutes from 'src/app/shared/constants/const-routes';
 
 @Component({
   selector: 'app-perform-test',

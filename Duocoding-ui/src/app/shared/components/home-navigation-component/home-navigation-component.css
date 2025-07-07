@@ -1,27 +1,31 @@
 .back-container {
-  display: inline-block;
-  margin-bottom: 1rem;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  background-color: #e9f0f7;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  font-family: 'Segoe UI', sans-serif;
-  color: #2c3e50;
-}
-
-.back-container:hover {
-  background-color: #d0e4f2;
-  transform: translateX(-2px);
-}
-
-.back-container h2 {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: inherit;
   display: flex;
   align-items: center;
   gap: 8px;
+  cursor: pointer;
+
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  background-color: transparent;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  font-family: 'Segoe UI', sans-serif;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.95rem;
+
 }
 
+.back-container:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(-3px);
+}
+
+.back-container svg {
+  fill: currentColor;
+  transition: transform 0.2s ease;
+}
+
+.back-container:hover svg {
+  transform: translateX(-2px);
+}

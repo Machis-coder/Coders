@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
-import ConstRoutes from './shared/contants/const-routes';
+import ConstRoutes from './shared/constants/const-routes';
 import { HomeComponent } from './features/home-component/home-component';
 import { UsersComponent } from './features/users-component/users.component';
 import { ForbiddenComponent } from './features/forbidden-component/forbidden-component';

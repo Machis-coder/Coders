@@ -1,6 +1,6 @@
 import {HttpHeaders, HttpParams} from "@angular/common/http";
-import ConstUrls from "../../shared/contants/const-urls";
-import ConstLocalStorage from "../../shared/contants/const-local-storage";
+import ConstUrls from "../../shared/constants/const-urls";
+import ConstLocalStorage from "../../shared/constants/const-local-storage";
 import { User } from "src/app/interfaces/user";
 import {UserResponseDTO} from "../../interfaces/UserResponseDTO";
 

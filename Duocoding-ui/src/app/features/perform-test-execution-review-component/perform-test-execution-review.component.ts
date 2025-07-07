@@ -11,7 +11,7 @@ import { HomeNavigationComponent } from 'src/app/shared/components/home-navigati
 import { TestExecutionService } from 'src/app/core/services/test-execution.service';
 import { TestExecution } from 'src/app/interfaces/test.execution';
 import { Test } from 'src/app/interfaces/test';
-import ConstRoutes from 'src/app/shared/contants/const-routes';
+import ConstRoutes from 'src/app/shared/constants/const-routes';
 import { TestExecutionReviewComponent } from 'src/app/shared/components/test-execution-review-component/test-execution-review-component';
 import { QuestionExecution } from 'src/app/interfaces/question-execution';
 

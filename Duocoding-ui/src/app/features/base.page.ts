@@ -2,7 +2,7 @@ import { Directive, inject, Input, OnInit } from "@angular/core";
 import {isUserInRole, isUserLogged, userId, userRole} from "../utils/user.utils";
 import { BaseComponent } from "./base.component";
 import { ActivatedRoute, Router } from "@angular/router";
-import ConstRoutes from "../shared/contants/const-routes";
+import ConstRoutes from "../shared/constants/const-routes";
 
 @Directive()
 export abstract class BasePage extends BaseComponent {

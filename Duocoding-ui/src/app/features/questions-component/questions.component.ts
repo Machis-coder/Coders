@@ -11,7 +11,7 @@ import { HomeNavigationComponent } from 'src/app/shared/components/home-navigati
 import { ButtonComponent } from 'src/app/shared/components/button-component/button-component';
 import { QuestionService } from 'src/app/core/services/question.service';
 import { Question } from 'src/app/interfaces/question';
-import ConstRoutes from 'src/app/shared/contants/const-routes';
+import ConstRoutes from 'src/app/shared/constants/const-routes';
 
 
 @Component({

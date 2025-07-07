@@ -16,7 +16,7 @@ import { Test } from 'src/app/interfaces/test';
 import { Subject } from 'src/app/interfaces/subject';
 import { SubjectService } from 'src/app/core/services/subject.service';
 import {BasePage} from "../base.page";
-import ConstRoutes from "../../shared/contants/const-routes";
+import ConstRoutes from "../../shared/constants/const-routes";
 
 @Component({
   selector: 'app-new-test',
