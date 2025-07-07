@@ -34,11 +34,11 @@ public interface TestExecutionRepository extends JpaRepository<TestExecution, Lo
     JOIN te.test t
     JOIN t.subject s
     WHERE te.active = true
-      AND te.user.id = :userId
-      AND te.user.active = true
-      AND s.id = :subjectId
-      AND s.active = true
-""")
+    AND te.user.id = :userId
+    AND te.user.active = true
+    AND s.id = :subjectId
+    AND s.active = true
+    """)
     List<TestExecution> findActiveByUserIdAndSubjectId(
             @Param("userId") Long userId,
             @Param("subjectId") Long subjectId
