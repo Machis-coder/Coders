@@ -25,8 +25,14 @@ public class UserSubject {
 
     public UserSubject() {}
 
+	public UserSubject(Long id, User user, Subject subject) {
+        this.id = id;
+        this.user = user;
+        this.subject = subject;
+    }
+        
     public Long getId() {
-        return id;
+    	return id;
     }
 
     public void setId(Long id) {

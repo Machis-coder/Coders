@@ -1,12 +1,8 @@
 package com.codingtrainers.duocoding.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
-
-
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table (name = "subject")
 public class Subject {
 

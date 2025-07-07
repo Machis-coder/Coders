@@ -18,12 +18,41 @@ CREATE TABLE user (
                       active boolean DEFAULT TRUE
 );
 
-CREATE TABLE question (
+CREATE TABLE question_cat (
                           id BIGINT PRIMARY KEY AUTO_INCREMENT,
                           type VARCHAR(50) NOT NULL,
                           description TEXT NOT NULL,
                           answer TEXT,
                           active boolean DEFAULT TRUE
+);
+
+CREATE TABLE response_cat (
+                          id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                          description TEXT NOT NULL,
+                          response_order INT NOT NULL,
+                          question_id BIGINT,
+                          active boolean DEFAULT TRUE,
+                          FOREIGN KEY (question_id) REFERENCES question_cat(id) ON DELETE CASCADE
+);
+
+CREATE TABLE test (
+                      id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                      name VARCHAR(255) NOT NULL,
+                      description TEXT,
+                      subject_id BIGINT,
+                      active boolean DEFAULT TRUE,
+                      FOREIGN KEY (subject_id) REFERENCES subject(id) ON DELETE SET NULL
+);
+
+CREATE TABLE question (
+                          id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                          type VARCHAR(50) NOT NULL,
+                          description TEXT NOT NULL,
+                          question_order INT NOT NULL,
+                          answer TEXT,
+                          test_id BIGINT NOT NULL,
+                          active boolean DEFAULT TRUE,
+                          FOREIGN KEY (test_id) REFERENCES test(id) ON DELETE CASCADE
 );
 
 CREATE TABLE response (
@@ -35,14 +64,7 @@ CREATE TABLE response (
                           FOREIGN KEY (question_id) REFERENCES question(id) ON DELETE CASCADE
 );
 
-CREATE TABLE test (
-                      id BIGINT PRIMARY KEY AUTO_INCREMENT,
-                      name VARCHAR(255) NOT NULL,
-                      description TEXT,
-                      subject_id BIGINT,
-                      active boolean DEFAULT TRUE,
-                      FOREIGN KEY (subject_id) REFERENCES subject(id) ON DELETE SET NULL
-);
+
 
 CREATE TABLE test_execution (
                                 id BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -68,14 +90,6 @@ CREATE TABLE test_execution_response (
                                          active boolean DEFAULT TRUE,
                                          FOREIGN KEY (test_execution_id) REFERENCES test_execution(id) ON DELETE CASCADE,
                                          FOREIGN KEY (question_id) REFERENCES question(id) ON DELETE CASCADE
-);
-
-CREATE TABLE test_question (
-                               id BIGINT PRIMARY KEY AUTO_INCREMENT,
-                               test_id BIGINT,
-                               question_id BIGINT,
-                               FOREIGN KEY (test_id) REFERENCES test(id) ON DELETE CASCADE,
-                               FOREIGN KEY (question_id) REFERENCES question(id) ON DELETE CASCADE
 );
 
 CREATE TABLE test_subject (

@@ -16,3 +16,8 @@ export const isUserInRole = (roles: string[]) => {
     const userRol = userRole();
     return roles.length === 0 || userRol === '' || roles.indexOf(userRol) > -1;
 }
+
+export const userId = () => {
+    const user = getUser();
+    return user.id;
+}

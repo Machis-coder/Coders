@@ -5,6 +5,7 @@ import com.codingtrainers.duocoding.dto.input.NotesFromTeacherRequestDTO;
 import com.codingtrainers.duocoding.dto.input.TestExecutionRequestDTO;
 import com.codingtrainers.duocoding.dto.output.TestExecutionDTO;
 import com.codingtrainers.duocoding.dto.output.TestExecutionFullDTO;
+import com.codingtrainers.duocoding.dto.output.TestExecutionReview;
 import com.codingtrainers.duocoding.entities.TestExecution;
 import com.codingtrainers.duocoding.services.TestExecutionService;
 import jakarta.persistence.EntityNotFoundException;
@@ -91,6 +92,14 @@ public class TestExecutionController {
         return ResponseEntity.ok(executions);
     }
 
+    @GetMapping("/{id}/review")
+    public ResponseEntity<TestExecutionReview> getTestExecutionReviewById(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(testExecutionService.getTestExecutionForReview(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
 
     //esto no funciona

@@ -2,7 +2,9 @@ package com.codingtrainers.duocoding.controllers;
 
 import com.codingtrainers.duocoding.dto.input.TestRequestDTO;
 import com.codingtrainers.duocoding.dto.output.ExamStructureResponseDTO;
+import com.codingtrainers.duocoding.dto.output.TestDTO;
 import com.codingtrainers.duocoding.dto.output.TestResponseDTO;
+import com.codingtrainers.duocoding.entities.Test;
 import com.codingtrainers.duocoding.services.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,22 +23,23 @@ public class TestController {
     private TestService testService;
 
     @GetMapping
-    public ResponseEntity<List<TestResponseDTO>> getAllTests() {
-        List<TestResponseDTO> tests = testService.getAllTestDTOs();
-        return ResponseEntity.ok(tests);
+    public List<TestDTO> getAllTests() {
+        return testService.getAllTests();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TestResponseDTO> getTestById(@PathVariable Long id) {
-        Optional<TestResponseDTO> test = testService.getTestDTOById(id);
-        return test.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public TestDTO getTestById(@PathVariable Long id) {
+        return testService.getTestById(id);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<TestResponseDTO> createTest(@RequestBody TestRequestDTO testDetails) {
-        TestResponseDTO createdTest = testService.createTest(testDetails);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdTest);
+    @PostMapping("/")
+    public ResponseEntity createTest(@RequestBody TestDTO test) {
+        try {
+            testService.createTest(test);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.ok().build();
+        }
     }
 
     @PutMapping("/{id}")
@@ -76,6 +79,11 @@ public class TestController {
     public ResponseEntity<List<TestResponseDTO>> getAvailableTestsBySubject(@PathVariable Long subjectId) {
         List<TestResponseDTO> tests = testService.getAvailableTestsBySubject(subjectId);
         return ResponseEntity.ok(tests);
+    }
+
+    @GetMapping("/{id}/perform")
+    public TestDTO getTestByIdToPerform(@PathVariable Long id) {
+        return testService.getTestByIdToPerform(id);
     }
 }
 

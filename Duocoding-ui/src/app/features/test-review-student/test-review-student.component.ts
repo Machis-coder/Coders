@@ -29,7 +29,7 @@ export class TestReviewStudentComponent extends BasePage implements OnInit{
   error = '';
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = this.getIdToEdit();
     if (id) {
       this.loadTestExecution(id);
     } else {

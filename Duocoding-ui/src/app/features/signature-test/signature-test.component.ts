@@ -8,6 +8,8 @@ import {getUser} from "../../core/services/utils.service";
 import {CommonModule} from "@angular/common";
 import {BasePage} from "../base.page";
 import {HomeNavigationComponent} from "../../shared/components/home-navigation-component/home-navigation-component";
+import {userId} from "../../utils/user.utils";
+import ConstRoutes from "../../shared/contants/const-routes";
 
 
 @Component({
@@ -37,8 +39,7 @@ export class SignatureTestComponent extends BasePage implements OnInit {
   testsWereLoaded = false;
 
   ngOnInit(): void {
-    const user = getUser();
-    this.currentUserId = user?.id || null;
+    this.currentUserId = userId();
 
     this.route.paramMap.subscribe(params => {
       const id = params.get('subjectId');
@@ -86,10 +87,9 @@ export class SignatureTestComponent extends BasePage implements OnInit {
 
   onAvailableTestClick(test: TestResponseDTO) {
     console.log('Test clicado:', test.id);
-    // Aquí puedes dejarlo preparado para redirigir a detalle
-    // this.router.navigate(['/test-detail', test.id]);
+    this.navigateTo(ConstRoutes.PATH_PERFORM_TEST + '/' + test.id)
   }
   onExecutionClick(execution: TestExecutionGeneralDTO) {
-    this.router.navigate(['/test-review-student', execution.id]);
+    this.navigateTo(ConstRoutes.PATH_TEST_REVIEW + '/' + execution.id);
   }
 }

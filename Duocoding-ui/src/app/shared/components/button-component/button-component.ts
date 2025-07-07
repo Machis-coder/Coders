@@ -13,6 +13,7 @@ export class ButtonComponent implements OnInit {
   @Input() text: string;
   @Input() clazz: string;
   @Input() type: ButtonType= ButtonType.PRIMARY;  
+  @Input() size: ButtonSize= ButtonSize.LARGE;
 
   @Output() click = new EventEmitter<any>()
 
@@ -20,7 +21,10 @@ export class ButtonComponent implements OnInit {
   styleStyle: string = '';
 
   ngOnInit(): void {
-    const classToApply = (this.clazz? this.clazz: '') +  (this.type === ButtonType.PRIMARY ? " button_primary":" button_secondary");
+    let classToApply = (this.clazz? this.clazz: '') +  (this.type === ButtonType.PRIMARY ? " button_primary":" button_secondary");
+    if (this.size !== ButtonSize.LARGE) {
+      classToApply = classToApply + " " + (this.size == ButtonSize.MEDIUM? 'size_medium': 'size_small')
+    }
     this.styleClass = classToApply
   }
 
@@ -33,4 +37,10 @@ export class ButtonComponent implements OnInit {
 export enum ButtonType {
   PRIMARY,
   SECONDARY
+}
+
+export enum ButtonSize {
+  LARGE = "LARGE",
+  MEDIUM = "MEDIUM",
+  SMALL = "SMALL"
 }

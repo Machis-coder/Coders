@@ -1,6 +1,7 @@
 export interface Response {
     order: number,
-    description: string
+    description: string,
+    checked: boolean
 }
 
 

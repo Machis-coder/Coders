@@ -9,7 +9,9 @@ export default class ConstUrls {
 
     public static readonly CONTEXT_LOGIN = '/login';
     public static readonly CONTEXT_USER = '/user';
-    public static readonly  CONTEXT_TESTEXECUTION = '/testexecution';
+    public static readonly CONTEXT_QUESTION = '/question';
+    public static readonly CONTEXT_TESTEXECUTION = '/testexecution';
+    public static readonly CONTEXT_TEST_EXECUTION = '/testexecution';
     public static readonly CONTEXT_TEST ='/tests';
 
     public static readonly NICK_USUARIO_PARAM = 'nickUsuario';

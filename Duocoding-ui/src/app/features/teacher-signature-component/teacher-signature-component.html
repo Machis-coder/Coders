@@ -4,7 +4,7 @@
     <div class="subjects-list" style="flex: 1; border-right: 1px solid #ccc; padding-right: 10px;">
         <h2>Asignaturas del Profesor</h2>
 
-        <ul *ngIf="subjects.length > 0; else noSubjects" class="subject-list">
+        <ul *ngIf="subjects?.length > 0; else noSubjects" class="subject-list">
             <li *ngFor="let subject of subjects"
                 [class.selected]="subject.subjectId === selectedSubjectId"
                 (click)="onSelectSubject(subject)"
@@ -23,11 +23,10 @@
         <h2>Alumnos matriculados</h2>
 
         <p *ngIf="!selectedSubjectId">Selecciona una asignatura para ver sus alumnos.</p>
-
         <p *ngIf="loadingStudents">Cargando alumnos...</p>
         <p *ngIf="errorStudents" class="error">{{ errorStudents }}</p>
 
-        <table *ngIf="enrolledStudents.length > 0">
+        <table *ngIf="enrolledStudents?.length > 0">
             <thead>
             <tr>
                 <th>Nombre</th>
@@ -48,7 +47,9 @@
             </tbody>
         </table>
 
-        <p *ngIf="selectedSubjectId && enrolledStudents.length === 0 && !loadingStudents">No hay alumnos matriculados en esta asignatura.</p>
+        <p *ngIf="selectedSubjectId && enrolledStudents?.length === 0 && !loadingStudents">
+            No hay alumnos matriculados en esta asignatura.
+        </p>
     </div>
 </div>
 
@@ -58,7 +59,7 @@
     <p *ngIf="loadingTests">Cargando tests disponibles...</p>
     <p *ngIf="errorTests" class="error">{{ errorTests }}</p>
 
-    <table *ngIf="availableTests && availableTests.length > 0">
+    <table *ngIf="availableTests?.length > 0">
         <thead>
         <tr>
             <th>Nombre del Test</th>
@@ -77,12 +78,10 @@
         </tbody>
     </table>
 
-    <p *ngIf="!loadingTests && availableTests.length === 0">
+    <p *ngIf="!loadingTests && availableTests?.length === 0">
         No hay tests disponibles actualmente para esta asignatura.
     </p>
 </div>
-
-
 
 <div class="executions-wrapper" *ngIf="selectedStudentId">
     <h2>Exámenes del alumno</h2>
@@ -90,7 +89,7 @@
     <p *ngIf="loadingExecutions">Cargando exámenes...</p>
     <p *ngIf="errorExecutions" class="error">{{ errorExecutions }}</p>
 
-    <table *ngIf="testExecutions && testExecutions.length > 0">
+    <table *ngIf="testExecutions?.length > 0">
         <thead>
         <tr>
             <th>Nombre del Test</th>

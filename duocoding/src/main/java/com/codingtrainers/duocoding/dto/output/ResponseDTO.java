@@ -5,11 +5,13 @@ public class ResponseDTO {
     private Long id;
     private String description;
     private Integer order;
+    private Long questionId;
 
-    public ResponseDTO(Long id, String description, Integer order) {
+    public ResponseDTO(Long id, String description, Integer order, Long questionId) {
         this.id = id;
         this.description = description;
         this.order = order;
+        this.questionId = questionId;
     }
 
     public Long getId() {
@@ -34,5 +36,13 @@ public class ResponseDTO {
 
     public void setOrder(Integer order) {
         this.order = order;
+    }
+
+    public Long getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
 }

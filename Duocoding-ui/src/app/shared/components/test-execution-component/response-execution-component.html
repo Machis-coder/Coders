@@ -1,0 +1,10 @@
+<section class="response-container">
+    <ng-container *ngIf="isMonoSelection">
+        <input type="radio" [checked]="checkedInternal" name="'respuesta'" (change)="onSelectionChange($event)"/>
+    </ng-container>
+    <ng-container *ngIf="isMultiSelection">
+        <input type="checkbox" [checked]="checkedInternal" (change)="onSelectionChange($event)"/>
+    </ng-container>    
+    <label style="text-align: center; width: 10px;">{{orderInternal}}</label>
+    <label>{{textInternal}}</label>
+</section>

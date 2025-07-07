@@ -1,0 +1,7 @@
+export enum QuestionType {
+  FREETEXT = "FREETEXT",
+  MONOSELECTION = "MONOSELECTION",
+  MULTISELECTION = "MULTISELECTION" ,
+  GAP = "GAP",
+  CODE = "CODE"
+}
