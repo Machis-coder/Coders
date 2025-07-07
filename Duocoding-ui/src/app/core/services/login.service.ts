@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import to, {headers} from "./utils.service";
-import ConstUrls from "../../shared/contants/const-urls";
+import ConstUrls from "../../shared/constants/const-urls";
 import { User } from 'src/app/interfaces/user';
+import {UserResponseDTO} from "../../interfaces/UserResponseDTO";
 
 
 @Injectable({
@@ -19,7 +20,7 @@ export class LoginService {
       password
     };
 
-    return this.http.post<User>(this.END_POINT_URL + '/signin', body, {
+    return this.http.post<UserResponseDTO>(this.END_POINT_URL + '/signin', body, {
               //headers: headers,
               observe: "response",
             })

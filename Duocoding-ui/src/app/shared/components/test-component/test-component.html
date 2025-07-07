@@ -1,0 +1,47 @@
+<div class="test-edit-container">
+    <h1>✏️ Edición de Test</h1>
+
+
+    <section>
+        <label for="subjectSelect">Asignatura:</label>
+        <select id="subjectSelect" [value]="subjectInternal" (change)="subjectchange($event)">
+            <option *ngFor="let subject of subjects" [value]="subject.id">{{ subject.name }}</option>
+        </select>
+    </section>
+
+
+    <section>
+        <label for="nameInput">Nombre del Test:</label>
+        <input id="nameInput" type="text" [(ngModel)]="nameInternal" placeholder="Introduce el nombre del test" />
+    </section>
+
+    <section>
+        <label for="descInput">Descripción:</label>
+        <input id="descInput" type="text" [(ngModel)]="descriptionInternal" placeholder="Breve descripción del test" />
+    </section>
+
+
+    <section class="question-section">
+        <h2>📚 Preguntas</h2>
+
+        <div class="question-wrapper">
+            <app-question
+                    [order]="question.order"
+                    [type]="question.type"
+                    [description]="question.description"
+                    [responses]="question.responses"
+                    [answer]="question.answer"
+                    (onback)="goprevious($event)"
+                    (onnext)="gonext($event)"
+                    (onsave)="saveQuestion($event)"
+                    (ondelete)="removeQuestion($event)">
+            </app-question>
+        </div>
+    </section>
+
+
+    <section class="buttons-container">
+        <app-button [class]="'button'" [text]="'🧼 Limpiar'" (click)="$event.stopPropagation(); oncleanpush();"></app-button>
+        <app-button [class]="'button'" [text]="'💾 Guardar'" (click)="$event.stopPropagation(); onsavepush(); "></app-button>
+    </section>
+</div>

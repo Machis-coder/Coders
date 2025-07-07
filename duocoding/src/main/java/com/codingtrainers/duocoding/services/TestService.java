@@ -3,40 +3,53 @@ package com.codingtrainers.duocoding.services;
 
 import com.codingtrainers.duocoding.dto.input.TestRequestDTO;
 import com.codingtrainers.duocoding.dto.output.ExamStructureResponseDTO;
+import com.codingtrainers.duocoding.dto.output.QuestionDTO;
 import com.codingtrainers.duocoding.dto.output.QuestionResponseDTO;
+import com.codingtrainers.duocoding.dto.output.TestDTO;
 import com.codingtrainers.duocoding.dto.output.TestResponseDTO;
 import com.codingtrainers.duocoding.entities.*;
 
-import com.codingtrainers.duocoding.repositories.ResponseRepository;
-import com.codingtrainers.duocoding.repositories.SubjectRepository;
-import com.codingtrainers.duocoding.repositories.TestQuestionRepository;
-import com.codingtrainers.duocoding.repositories.TestRepository;
+import com.codingtrainers.duocoding.repositories.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TestService {
 
-    private final TestRepository testRepository;
-    private final SubjectRepository subjectRepository;
-    private final TestQuestionRepository testQuestionRepository;
-    private final ResponseRepository responseRepository;
+    @Autowired
+    private TestRepository testRepository;
 
-    public TestService(TestRepository testRepository,
-                       SubjectRepository subjectRepository,
-                       TestQuestionRepository testQuestionRepository,
-                       ResponseRepository responseRepository) {
-        this.testRepository = testRepository;
-        this.subjectRepository = subjectRepository;
-        this.testQuestionRepository = testQuestionRepository;
-        this.responseRepository = responseRepository;
+    @Autowired
+    private SubjectRepository subjectRepository;
+
+    @Autowired
+    private TestQuestionRepository testQuestionRepository;
+
+    @Autowired
+    private ResponseRepository responseRepository;
+
+    @Autowired
+    private QuestionService questionService;
+
+    @Autowired
+    TestSubjectRepository testSubjectRepository;
+    @Autowired
+    private QuestionRepository questionRepository;
+
+    public List<TestDTO> getAllTests() {
+
+        return testRepository.findAll().stream().map(t ->
+            new TestDTO(t.getId(), t.getName(), t.getDescription(), t.getSubject().getName(), t.getSubject().getId(), null, t.getActive(), new ArrayList<>())
+        ).toList();
     }
 
     public List<TestResponseDTO> getAllTestDTOs() {
-        List<Test> tests = testRepository.findAll();
+        List<Test> tests = testRepository.findAllActive();
         List<TestResponseDTO> dtos = new ArrayList<>();
 
         for (Test test : tests) {
@@ -54,7 +67,7 @@ public class TestService {
     }
 
     public Optional<TestResponseDTO> getTestDTOById(Long id) {
-        return testRepository.findById(id).map(test -> {
+        return testRepository.findActiveById(id).map(test -> {
             List<QuestionResponseDTO> questions = getQuestionsForTest(test.getId());
             return new TestResponseDTO(
                     test.getId(),
@@ -68,11 +81,10 @@ public class TestService {
     }
 
     private List<QuestionResponseDTO> getQuestionsForTest(Long testId) {
-        List<TestQuestion> testQuestions = testQuestionRepository.findByTestId(testId);
+        List<Question> testQuestions = questionRepository.findAllByTestId(testId);
         List<QuestionResponseDTO> questions = new ArrayList<>();
 
-        for (TestQuestion tq : testQuestions) {
-            Question q = tq.getQuestion();
+        for (Question q : testQuestions) {
 
             QuestionResponseDTO dto = new QuestionResponseDTO();
             dto.setId(q.getId());
@@ -87,27 +99,32 @@ public class TestService {
         return questions;
     }
 
-    public TestResponseDTO createTest(TestRequestDTO dto) {
-        Test test = new Test();
-        test.setName(dto.getName());
-        test.setDescription(dto.getDescription());
-        test.setActive(dto.getActive());
+    public TestDTO getTestById(Long id) {
 
-        Subject subject = subjectRepository.findByIdAndActiveTrue(dto.getSubjectId())
-                .orElseThrow(() -> new RuntimeException("Subject not found with id: " + dto.getSubjectId()));
+        Test test = testRepository.findById(id).orElseThrow(() -> new RuntimeException("Test not found"));
+        List<QuestionDTO> questionDTOList = questionService.getQuestionsByTestId(id);
+        TestDTO testDTO = new TestDTO(test.getId(), test.getName(), test.getDescription(), test.getSubject().getName(), test.getSubject().getId(), null, test.getActive(), questionDTOList);
+        return testDTO;
+    }
 
-        test.setSubject(subject);
+    public TestDTO getTestByIdToPerform(Long id) {
+        TestDTO testDTO = getTestById(id);
+        testDTO.getQuestions().stream().forEach(q -> q.setAnswer(""));
+        return testDTO;
+    }
 
-        Test savedTest = testRepository.save(test);
+    public void createTest(TestDTO test) {
+        Test newTest = new Test();
+        newTest.setName(test.getName());
+        newTest.setDescription(test.getDescription());
+        newTest.setActive(true);
+        newTest.setDescription(test.getDescription());
+        Subject subject = new Subject();
+        subject.setId(test.getSubjectId());
+        newTest.setSubject(subject);
+        newTest = testRepository.save(newTest);
 
-        return new TestResponseDTO(
-                savedTest.getId(),
-                savedTest.getName(),
-                savedTest.getDescription(),
-                savedTest.getActive(),
-                savedTest.getSubject() != null ? savedTest.getSubject().getId() : null,
-                new ArrayList<>()
-        );
+        questionService.saveAll(newTest.getId(), test.getQuestions());
     }
 
     public Optional<TestResponseDTO> updateTest(Long id, TestRequestDTO dto) {
@@ -179,7 +196,7 @@ public class TestService {
                 }
             } catch (NumberFormatException ignored) {}
 
-            List<Response> responses = responseRepository.findByQuestionId(question.getId());
+            List<Response> responses = responseRepository.findActiveByQuestionId(question.getId());
             questionDTO.responses = responses.stream().map(r -> {
                 ExamStructureResponseDTO.ResponseDTO responseDTO = new ExamStructureResponseDTO.ResponseDTO();
                 responseDTO.responseId = r.getId();
@@ -193,6 +210,23 @@ public class TestService {
 
         return dto;
     }
+
+    public List<TestResponseDTO> getAvailableTestsBySubject(Long subjectId) {
+        List<Test> tests = testRepository.findBySubjectIdAndActiveTrue(subjectId);
+
+        return tests.stream().map(test -> {
+            List<QuestionResponseDTO> questions = getQuestionsForTest(test.getId());
+            return new TestResponseDTO(
+                    test.getId(),
+                    test.getName(),
+                    test.getDescription(),
+                    test.getActive(),
+                    test.getSubject() != null ? test.getSubject().getId() : null,
+                    questions
+            );
+        }).collect(Collectors.toList());
+    }
+
 }
 
     

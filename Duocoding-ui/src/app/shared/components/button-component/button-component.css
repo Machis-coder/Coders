@@ -2,7 +2,7 @@
   background-color: #022446;;
 }
 
-.button_secondaryprimary {  
+.button_secondary {  
   background-color: #025fbd;;
 }
 
@@ -16,6 +16,28 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+.size_medium {
+  width: 100%;
+  padding: 0.3rem;  
+  border: none;
+  color: white;
+  font-size: 0.5rem;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.size_small {
+  width: 100%;
+  padding: 0.2rem;  
+  border: none;
+  color: white;
+  font-size: 0.25rem;
+  border-radius: 1px;
+  cursor: pointer;
+}
+
+
 
 .button_primary:hover {  
   background-color: #025fbd;;

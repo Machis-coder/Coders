@@ -1,5 +1,12 @@
 <section class="response-container">
-    <input type="number" [value]="order"/>
-    <input type="text" [value]="text" />
-    <app-button [text]="'>>'" (click)="onClick()"/>
+    <ng-container *ngIf="isMonoSelection">
+        <input type="radio" [checked]="checkedInternal" name="'respuesta'" (change)="onSelectionChange($event)"/>
+    </ng-container>
+    <ng-container *ngIf="isMultiSelection">
+        <input type="checkbox" [checked]="checkedInternal" (change)="onSelectionChange($event)"/>
+    </ng-container>
+    <!--input type="number" [value]="orderInternal" style="width: 50px;"/-->
+    <label style="text-align: center; width: 10px;">{{orderInternal}}</label>
+    <input type="text" [(ngModel)]="textInternal" (change)="$event.stopPropagation(); onChangeText();"/>    
+    <app-button [text]="'X'" [size]="'MEDIUM'" (click)="onRemove()"/>
 </section>

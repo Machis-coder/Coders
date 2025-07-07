@@ -1,2 +1,8 @@
-<app-home-navigation/>
-<p>Student Signatures</p>
+
+
+<div class="cards-container">
+    <app-card *ngFor="let subject of subjects"
+              [title]="subject.subjectName"
+              [navigation]="'signature-test/' + subject.subjectId">
+    </app-card>
+</div>

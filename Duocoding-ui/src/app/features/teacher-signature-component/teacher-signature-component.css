@@ -1,0 +1,238 @@
+.teacher-signature-wrapper {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fafafa;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.top-section {
+    display: flex;
+    gap: 24px;
+    width: 100%;
+}
+
+.subjects-list {
+    flex: 1;
+    border-right: 2px solid #ddd;
+    padding-right: 20px;
+}
+
+.subjects-list h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: #0056b3;
+    font-weight: 700;
+    user-select: none;
+}
+
+.subject-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.subject-list li {
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    background: #fff;
+    border: 1.5px solid transparent;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    user-select: none;
+}
+
+.subject-list li:hover {
+    background-color: #e6f0ff;
+    border-color: #007bff;
+    color: #004a99;
+}
+
+.subject-list li.selected {
+    background-color: #022446;
+    color: #fff;
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+
+.students-list {
+    flex: 2;
+    padding-left: 20px;
+}
+
+.students-list h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: #0056b3;
+    font-weight: 700;
+    user-select: none;
+}
+
+.students-list p {
+    font-style: italic;
+    color: #777;
+    margin-bottom: 1rem;
+}
+
+
+.students-list table,
+.executions-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.students-list th,
+.students-list td,
+.executions-wrapper th,
+.executions-wrapper td {
+    text-align: left;
+    padding: 14px 18px;
+    border-bottom: 1px solid #eee;
+    font-weight: 500;
+    color: #444;
+}
+
+.students-list th,
+.executions-wrapper th {
+    background-color: #022446;
+    color: white;
+    font-weight: 700;
+    user-select: none;
+}
+
+.students-list tr:nth-child(even),
+.executions-wrapper tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.students-list tr:hover,
+.executions-wrapper tr:hover {
+    background-color: #e6f0ff;
+    cursor: pointer;
+    color: #004a99;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+
+.executions-wrapper {
+    max-width: 1000px;
+    margin: 30px auto 40px auto;
+    padding: 20px;
+    background: #fafafa;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.executions-wrapper h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: #0056b3;
+    font-weight: 700;
+    user-select: none;
+}
+
+.executions-wrapper p {
+    font-style: italic;
+    color: #777;
+    margin-bottom: 1rem;
+}
+
+
+.error {
+    color: #d9534f;
+    font-weight: 600;
+    margin-top: 12px;
+    user-select: none;
+}
+
+.subject-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.subject-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 8px;
+}
+
+.subject-list::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 8px;
+}
+
+.subject-list::-webkit-scrollbar-thumb:hover {
+    background: #0056b3;
+}
+.available-tests-wrapper {
+    max-width: 1000px;
+    margin: 30px auto 40px auto;
+    padding: 20px;
+    background: #fafafa;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.available-tests-wrapper h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: #0056b3;
+    font-weight: 700;
+    user-select: none;
+}
+
+.available-tests-wrapper p {
+    font-style: italic;
+    color: #777;
+    margin-bottom: 1rem;
+}
+
+.available-tests-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.available-tests-wrapper th,
+.available-tests-wrapper td {
+    text-align: left;
+    padding: 14px 18px;
+    border-bottom: 1px solid #eee;
+    font-weight: 500;
+    color: #444;
+}
+
+.available-tests-wrapper th {
+    background-color: #022446;
+    color: white;
+    font-weight: 700;
+    user-select: none;
+}
+
+.available-tests-wrapper tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.available-tests-wrapper tr:hover {
+    background-color: #e6f0ff;
+    cursor: pointer;
+    color: #004a99;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}

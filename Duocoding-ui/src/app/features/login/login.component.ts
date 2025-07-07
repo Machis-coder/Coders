@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import ConstRoutes from "../../shared/contants/const-routes";
+import ConstRoutes from "../../shared/constants/const-routes";
 import {FormsModule} from "@angular/forms";
 import {
   storeUser,
@@ -11,6 +11,7 @@ import {
 import { User } from 'src/app/interfaces/user';
 import { LoginService } from 'src/app/core/services/login.service';
 import { ButtonComponent } from 'src/app/shared/components/button-component/button-component';
+import {UserResponseDTO} from "../../interfaces/UserResponseDTO";
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
   username = '';
   password = '';
   error = '';
-  usuarioLogado: User;
+  usuarioLogado: UserResponseDTO;
 
   constructor(private loginService: LoginService, private router: Router) {
 
@@ -53,4 +54,7 @@ export class LoginComponent implements OnInit {
         }
     });
   }
+  goToRegister() {
+  this.router.navigate(['/register']);
+}
 }

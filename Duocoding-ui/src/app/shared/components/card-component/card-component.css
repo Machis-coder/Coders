@@ -1,23 +1,18 @@
-.login-container {
-  max-width: 400px;
-  min-width: 400px;
-  /*margin: 5px; */
-  padding: 2rem;
+.card-container {
+  width: 300px;
+  padding: 1.5rem;
+  margin: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
-.login-container:hover {
-  max-width: 400px;
-  /*margin: 5px;*/
-  padding: 2rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+.card-container:hover {
   background-color: #022446;
   color: white;
-}
-
-h2, p {
-  text-align: center;
 }

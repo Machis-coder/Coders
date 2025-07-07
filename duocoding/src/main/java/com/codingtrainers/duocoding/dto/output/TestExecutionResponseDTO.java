@@ -1,5 +1,7 @@
 package com.codingtrainers.duocoding.dto.output;
 
+import com.codingtrainers.duocoding.entities.Question;
+import com.codingtrainers.duocoding.entities.QuestionType;
 import com.codingtrainers.duocoding.entities.TestExecutionResponse;
 
 public class TestExecutionResponseDTO {
@@ -9,13 +11,43 @@ public class TestExecutionResponseDTO {
     private String answer;
     private Boolean isCorrect;
     private String notes;
+    private String questionDescription;
+    private String questionAnswer;
+    private QuestionType questionType;
 
-    public TestExecutionResponseDTO(TestExecutionResponse response) {
+    public TestExecutionResponseDTO(TestExecutionResponse response, Question question) {
         this.id = response.getId();
         this.questionId = response.getQuestion().getId();
         this.answer = response.getAnswer();
         this.isCorrect = response.getCorrect();
         this.notes = response.getNotes();
+        this.questionDescription = question.getDescription();
+        this.questionAnswer = question.getAnswer();
+        this.questionType = question.getType();
+    }
+
+    public String getQuestionDescription() {
+        return questionDescription;
+    }
+
+    public void setQuestionDescription(String questionDescription) {
+        this.questionDescription = questionDescription;
+    }
+
+    public String getQuestionAnswer() {
+        return questionAnswer;
+    }
+
+    public void setQuestionAnswer(String questionAnswer) {
+        this.questionAnswer = questionAnswer;
+    }
+
+    public QuestionType getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(QuestionType questionType) {
+        this.questionType = questionType;
     }
 
     public TestExecutionResponseDTO() {}

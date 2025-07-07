@@ -3,6 +3,7 @@ package com.codingtrainers.duocoding.services;
 
 import com.codingtrainers.duocoding.dto.input.UserRequestDTO;
 import com.codingtrainers.duocoding.dto.output.UserResponseDTO;
+import com.codingtrainers.duocoding.entities.Role;
 import com.codingtrainers.duocoding.entities.User;
 import com.codingtrainers.duocoding.repositories.UserRepository;
 import com.codingtrainers.duocoding.utils.HashUtils;
@@ -33,6 +34,9 @@ public class UserService {
     }
     public void update(User user) {
         user.setActive(true);
+        if (user.getRole() == null) {
+            user.setRole(Role.PUPIL);
+        }
         userRepository.save(user);
     }
 

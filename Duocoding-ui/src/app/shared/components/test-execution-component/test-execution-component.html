@@ -1,0 +1,38 @@
+<div class="question-container">
+    <section>
+        <label>Asignatura: {{subject}}</label>
+    </section>
+    <section>
+        <label>Nombre: {{name}}</label>
+    </section>
+    <section>
+        <label>Descripción: {{description}}</label>
+    </section>    
+    <ng-container *ngIf="question !== undefined">
+        <h2>Preguntas:</h2>        
+        <ng-container style="max-height: 700px;overflow-y: auto;">
+            <ng-container>
+                <app-question [id]="question.id" [order]="question.order" [type]="question.type" [description]="question.description" [responses]="question.responses" [answer]="question.answer"
+                (onback)="goprevious($event)"
+                (onnext)="gonext($event)"
+                (onsave)="saveQuestion($event)" />
+            </ng-container>
+        </ng-container>        
+    </ng-container>
+
+    <section class="buttons-container" id="buttons">
+        <app-button
+                clazz="button"
+                text="Clean"
+
+                (click)="oncleanpush()">
+        </app-button>
+
+        <app-button
+                clazz="button"
+                text="Save"
+
+                (click)="onsavepush()">
+        </app-button>
+        </section>
+</div>

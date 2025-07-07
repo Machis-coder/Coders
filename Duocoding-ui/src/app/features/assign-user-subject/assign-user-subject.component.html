@@ -1,0 +1,81 @@
+
+<div class="assign-user-subject-page">
+    <h2>Asignar usuarios a asignaturas</h2>
+
+    <div class="assign-form">
+        <label>Selecciona un usuario:</label>
+        <select [(ngModel)]="selectedUser">
+            <option [ngValue]="null">-- Seleccionar --</option>
+            <option *ngFor="let user of users" [ngValue]="user">{{ user.username }}</option>
+        </select>
+
+        <label>Selecciona una asignatura:</label>
+        <select [(ngModel)]="selectedSubject">
+            <option [ngValue]="null">-- Seleccionar --</option>
+            <option *ngFor="let subject of subjects" [ngValue]="subject">{{ subject.name }}</option>
+        </select>
+
+        <div class="button-row">
+            <button (click)="assign()" [disabled]="!selectedUser || !selectedSubject">Asignar</button>
+            <button (click)="activate()" [disabled]="!selectedUser || !selectedSubject">Activar</button>
+            <button (click)="delete()" [disabled]="!selectedUser || !selectedSubject">Eliminar</button>
+        </div>
+    </div>
+
+    <div class="result-section">
+        <button (click)="getSubjectsByUser()" [disabled]="!selectedUser">Ver asignaturas del usuario</button>
+        <button (click)="getUsersBySubject()" [disabled]="!selectedSubject">Ver usuarios de la asignatura</button>
+    </div>
+
+    <p *ngIf="message" class="info-message">{{ message }}</p>
+
+    <div *ngIf="userSubjects" class="table-wrapper" #userSubjectsSection>
+        <h3>Asignaturas del usuario {{ selectedUser?.username }}</h3>
+
+        <ng-container *ngIf="userSubjects.length > 0; else noSubjects">
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>Asignatura</th>
+                    <th>Estado</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let us of userSubjects">
+                    <td>{{ us.subjectName }}</td>
+                    <td>{{ us.active ? 'Activa' : 'Inactiva' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </ng-container>
+
+        <ng-template #noSubjects>
+            <p class="info-message">Este usuario no tiene asignaturas asignadas.</p>
+        </ng-template>
+    </div>
+
+    <div *ngIf="subjectUsers" class="table-wrapper" #subjectUsersSection>
+        <h3>Usuarios de la asignatura {{ selectedSubject?.name }}</h3>
+
+        <ng-container *ngIf="subjectUsers.length > 0; else noUsers">
+            <table class="styled-table">
+                <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Estado</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let su of subjectUsers">
+                    <td>{{ su.userName }}</td>
+                    <td>{{ su.active ? 'Activa' : 'Inactiva' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </ng-container>
+
+        <ng-template #noUsers>
+            <p class="info-message">Esta asignatura no tiene usuarios asignados.</p>
+        </ng-template>
+    </div>
+</div>

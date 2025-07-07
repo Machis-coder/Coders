@@ -1,0 +1,5 @@
+
+Gtypescript:S1128",Remove this unused import of 'QuestionType'.(¤Ώ”3
+Ctypescript:S1128"'Remove this unused import of 'Subject'.(γκ†ÿ
+typescript:S1172;"eRemove the unused function parameter "changes" or rename it to "_changes" to make intention explicit.(σ•ΕΪ
+qtypescript:S2201W"UConsider using "forEach" instead of "map" as its return value is not being used here.(›άΊΜ

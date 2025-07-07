@@ -1,41 +1,43 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { User } from '../../interfaces/user';
 import { CommonModule } from '@angular/common';
 import { TableComponent } from 'src/app/shared/components/table-component/table-component';
-import { UserService } from 'src/app/core/services/user.service';
-import {  
+import {
   isOkResponse,
   loadResponseData
 } from "../../core/services/utils.service";
 import { BasePage } from '../base.page';
 import { Router } from '@angular/router';
 import { HomeNavigationComponent } from 'src/app/shared/components/home-navigation-component/home-navigation-component';
+import { ButtonComponent } from 'src/app/shared/components/button-component/button-component';
+import { QuestionService } from 'src/app/core/services/question.service';
+import { Question } from 'src/app/interfaces/question';
+import ConstRoutes from 'src/app/shared/constants/const-routes';
 
 
 @Component({
   selector: 'app-questions',
   standalone: true,
-  imports: [CommonModule, TableComponent, HomeNavigationComponent],
+  imports: [CommonModule, TableComponent, HomeNavigationComponent, ButtonComponent],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.css'
 })
 export class QuestionsComponent extends BasePage {
-  userList: User[] = [];
-  
+  questionList: Question[] = [];
+
   router: Router = inject(Router);
-  userService: UserService = inject(UserService);
+  questionService: QuestionService = inject(QuestionService);
 
 
   ngOnInit() {
-      super.ngOnInit();
-      this.loadUsers();
+    super.ngOnInit();
+    this.load();
   }
-  
-  loadUsers() {
-    this.userService.findUsers().subscribe({
+
+  load() {
+    this.questionService.findQuestions().subscribe({
       next: (response) => {
         if (isOkResponse(response)) {
-          this.userList = loadResponseData(response);
+          this.questionList = loadResponseData(response);
         } else {
           //this.error = loadResponseError(response);
         }
@@ -43,16 +45,16 @@ export class QuestionsComponent extends BasePage {
       error: (err) =>{
         console.log(err);
       }
-      
-    });      
-  } 
+
+    });
+  }
 
   gotoEdit(id) {
-    this.router.navigate(['/user/' + id]);
+    this.navigateTo(ConstRoutes.PATH_QUESTION + '/' + id);
   }
 
   gotoNew() {
-    this.router.navigate(['/user']);
+    this.navigateTo(ConstRoutes.PATH_QUESTION);
   }
 
 }

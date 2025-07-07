@@ -1,0 +1,93 @@
+.signature-test-wrapper {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fafafa;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.signature-test-wrapper h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: #0056b3;
+    font-weight: 700;
+    user-select: none;
+}
+
+.executions-wrapper {
+    max-width: 1000px;
+    margin: 30px auto 40px auto;
+    padding: 20px;
+    background: #fafafa;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.executions-wrapper h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    color: #0056b3;
+    font-weight: 700;
+    user-select: none;
+}
+
+.signature-test-wrapper p,
+.executions-wrapper p {
+    font-style: italic;
+    color: #777;
+    margin-bottom: 1rem;
+}
+
+.signature-test-wrapper table,
+.executions-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.signature-test-wrapper th,
+.signature-test-wrapper td,
+.executions-wrapper th,
+.executions-wrapper td {
+    text-align: left;
+    padding: 14px 18px;
+    border-bottom: 1px solid #eee;
+    font-weight: 500;
+    color: #444;
+}
+
+.signature-test-wrapper th,
+.executions-wrapper th {
+    background-color: #022446;
+    color: white;
+    font-weight: 700;
+    user-select: none;
+}
+
+.signature-test-wrapper tr:nth-child(even),
+.executions-wrapper tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.signature-test-wrapper tr:hover,
+.executions-wrapper tr:hover {
+    background-color: #e6f0ff;
+    cursor: pointer;
+    color: #004a99;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.error {
+    color: #d9534f;
+    font-weight: 600;
+    margin-top: 12px;
+    user-select: none;
+}

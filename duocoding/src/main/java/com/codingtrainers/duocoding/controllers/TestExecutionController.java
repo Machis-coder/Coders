@@ -5,6 +5,7 @@ import com.codingtrainers.duocoding.dto.input.NotesFromTeacherRequestDTO;
 import com.codingtrainers.duocoding.dto.input.TestExecutionRequestDTO;
 import com.codingtrainers.duocoding.dto.output.TestExecutionDTO;
 import com.codingtrainers.duocoding.dto.output.TestExecutionFullDTO;
+import com.codingtrainers.duocoding.dto.output.TestExecutionReview;
 import com.codingtrainers.duocoding.entities.TestExecution;
 import com.codingtrainers.duocoding.services.TestExecutionService;
 import jakarta.persistence.EntityNotFoundException;
@@ -18,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/testexecution")
+@CrossOrigin("*")
 public class TestExecutionController {
 
     @Autowired
@@ -40,10 +42,10 @@ public class TestExecutionController {
         return ResponseEntity.ok(executions);
     }
 
-    @PutMapping("/{id}/delete")
-    public ResponseEntity<Void> deleteTestExecution(@PathVariable("id") Long id) {
-        testExecutionService.deleteTestExecution(id);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/users/{userId}/executions")
+    public ResponseEntity<List<com.codingtrainers.duocoding.dto.output.TestExecutionDTO>> getTestExecutionsByUserId(@PathVariable("userId") Long userId) {
+        List<com.codingtrainers.duocoding.dto.output.TestExecutionDTO> testDtos = testExecutionService.getTestExecutionsByUserId(userId);
+        return ResponseEntity.ok(testDtos);
     }
 
     @GetMapping("/id/{id}")
@@ -52,6 +54,19 @@ public class TestExecutionController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @PutMapping("/{id}/delete")
+    public ResponseEntity<Void> deleteTestExecution(@PathVariable("id") Long id) {
+        testExecutionService.deleteTestExecution(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/activate")
+    public ResponseEntity<Void> activateExecution(@PathVariable("id") Long id) {
+        testExecutionService.activateTestExecution(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
     @PostMapping("/")
     public ResponseEntity<Void> saveTestExecution(@RequestBody TestExecutionRequestDTO testExecutionRequestDTO) {
@@ -65,14 +80,30 @@ public class TestExecutionController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/users/{userId}/executions")
-    public ResponseEntity<List<com.codingtrainers.duocoding.dto.output.TestExecutionDTO>> getTestExecutionsByUserId(@PathVariable("userId") Long userId) {
-        List<com.codingtrainers.duocoding.dto.output.TestExecutionDTO> testDtos = testExecutionService.getTestExecutionsByUserId(userId);
-        return ResponseEntity.ok(testDtos);
+    @GetMapping("/users/{userId}/subjects/{subjectId}/executions")
+    public ResponseEntity<List<TestExecutionDTO>> getActiveTestExecutionsByUserAndSubject(
+            @PathVariable Long userId,
+            @PathVariable Long subjectId) {
+        List<TestExecutionDTO> executions = testExecutionService.findActiveByUserIdAndSubjectId(userId, subjectId);
+
+        if (executions.isEmpty()) {
+            return ResponseEntity.noContent().build(); // HTTP 204
+        }
+        return ResponseEntity.ok(executions);
     }
 
+    @GetMapping("/{id}/review")
+    public ResponseEntity<TestExecutionReview> getTestExecutionReviewById(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(testExecutionService.getTestExecutionForReview(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
     //esto no funciona
-    @GetMapping("/{executionId}/structure")
+   /* @GetMapping("/{executionId}/structure")
     public ResponseEntity<TestExecutionFullDTO> getTextExecution(@PathVariable("executionId") Long executionId) {
         try {
             TestExecutionFullDTO dto = testExecutionService.getTestExecution(executionId);
@@ -80,5 +111,5 @@ public class TestExecutionController {
         } catch (EntityNotFoundException enfe) {
             return ResponseEntity.notFound().build();
         }
-    }
+    }*/
 }

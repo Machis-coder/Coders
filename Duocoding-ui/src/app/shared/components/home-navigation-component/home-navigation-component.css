@@ -1,22 +1,31 @@
 .back-container {
-  max-width: 300px;
-  /*min-width: 300px;*/
-  /*margin: 5px; */
-  /*padding: 0px;*/
-  /*border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;*/
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  background-color: transparent;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  font-family: 'Segoe UI', sans-serif;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.95rem;
+
 }
 
 .back-container:hover {
-  max-width: 300px;
-  /*margin: 5px;*/
-  /*padding: 1px;
-  border: 1px solid #ccc;
-  border-radius: 8px;*/
-  background-color: lightgray;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateX(-3px);
 }
 
-h2, p {
-  text-align: left;
+.back-container svg {
+  fill: currentColor;
+  transition: transform 0.2s ease;
+}
+
+.back-container:hover svg {
+  transform: translateX(-2px);
 }

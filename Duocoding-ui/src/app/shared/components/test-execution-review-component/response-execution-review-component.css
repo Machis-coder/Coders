@@ -1,0 +1,20 @@
+.response-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1px;
+  border-radius: 8px;
+  border: 1px solid black;
+  width: 590px; 
+  align-items: center;
+}
+
+input[type="text"],
+select,
+textarea {
+  width: 400px;
+  padding: 0.5rem2px;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+

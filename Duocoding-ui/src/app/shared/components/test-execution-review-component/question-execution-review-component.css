@@ -1,0 +1,51 @@
+input[type="text"],
+select,
+textarea {
+  width: 100%;
+  padding: 2px;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.question-container {
+  max-width: 600px;
+  
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.buttons-container {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1px;
+  width: auto;
+}
+
+.horizontal-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.button {
+  width: 30%;
+}
+
+.button_margin_bottom {
+  margin-bottom: 5px;
+}
+
+.green {
+  background-color: green;
+  font-weight: bolder;
+}
+
+.red {
+  background-color: red;
+  font-weight: bolder;
+}
+

@@ -1,5 +1,10 @@
+import { QuestionType } from "../shared/enums/question.types";
+import { Response } from "./response";
+
 export interface Question {
-    type: number,
+    id:number,
+    order: number,
+    type: QuestionType,
     description: string,
     answer: string,
     responses: Response[],

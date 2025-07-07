@@ -26,6 +26,23 @@ public interface TestExecutionRepository extends JpaRepository<TestExecution, Lo
     @Query("SELECT te FROM TestExecution te WHERE te.id = :id AND te.active = true")
     Optional<TestExecution> findActiveById(@Param("id") Long id);
 
+    @Query("SELECT te FROM TestExecution te WHERE te.id = :id AND te.active = false")
+    Optional<TestExecution> findFalseById(@Param("id") Long id);
+
+    @Query("""
+    SELECT te FROM TestExecution te
+    JOIN te.test t
+    JOIN t.subject s
+    WHERE te.active = true
+    AND te.user.id = :userId
+    AND te.user.active = true
+    AND s.id = :subjectId
+    AND s.active = true
+    """)
+    List<TestExecution> findActiveByUserIdAndSubjectId(
+            @Param("userId") Long userId,
+            @Param("subjectId") Long subjectId
+    );
     List<TestExecution> findAllByActiveTrue();
     List<TestExecution> findAllByActiveFalse();
 }

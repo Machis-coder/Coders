@@ -1,0 +1,14 @@
+<div class="register-container  login-container">
+  <h2>Crear Cuenta</h2>
+  <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+    <input type="text" placeholder="Nombre" [(ngModel)]="user.name" name="name" required />
+    <input type="text" placeholder="Apellido" [(ngModel)]="user.surname" name="surname" required />
+    <input type="text" placeholder="DNI" [(ngModel)]="user.dni" name="dni" required />
+    <input class="date" type="date" placeholder="Fecha de Nacimiento" [(ngModel)]="user.birthday" name="birthday" required />
+    <input class="email" type="email" placeholder="Email" [(ngModel)]="user.email" name="email" required />
+    <input type="text" placeholder="Username" [(ngModel)]="user.username" name="username" required />
+    <input type="password" placeholder="Password" [(ngModel)]="user.password" name="password" required />
+    
+    <app-button text="Registrar" type="submit"></app-button>
+  </form>
+</div>
