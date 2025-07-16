@@ -6,6 +6,6 @@
     <div class="form-group">
         <input [(ngModel)]="password" type="password" placeholder="Password" /><br/>
     </div>
-    <app-button (click)="onLogin()" text="Entrar"  />
-     <app-button class="register" (click)="goToRegister()" text="Crear cuenta" />
+    <app-button (buttonClick)="onLogin()" text="Entrar"  />
+     <app-button class="register" (buttonClick)="goToRegister()" text="Crear cuenta" />
 </div>

@@ -6,6 +6,8 @@ import { ButtonComponent } from '../button-component/button-component';
 import { FormsModule } from '@angular/forms';
 import { QuestionType } from '../../enums/question.types';
 import { Question } from 'src/app/interfaces/question';
+import {isUserInRole} from "../../../utils/user.utils";
+import Role from "../../../roles";
 
 @Component({
   selector: 'app-question',
@@ -14,121 +16,106 @@ import { Question } from 'src/app/interfaces/question';
   templateUrl: './question-component.html',
   styleUrl: './question-component.css'
 })
-export class QuestionComponent implements OnInit, OnChanges {
-  
 
+export class QuestionComponent implements OnInit, OnChanges {
   @Input() id: number;
   @Input() order: number;
-  @Input() type: string;
+  @Input() type: QuestionType;
   @Input() description: string;
-  
-  @Input() responses: Response[];
-  @Input() answer:string;
+  @Input() responses: Response[] = [];
+  @Input() answer: string;
+  @Input() editable: boolean = true;
 
-  @Output() onsave = new EventEmitter<any>()
-  @Output() ondelete = new EventEmitter<any>()
-  @Output() onback = new EventEmitter<any>()
-  @Output() onnext = new EventEmitter<any>()
-  
-  typeInternal: string;
-  responsesInternal: Response[];
-  showResponses: boolean = false;   
+  @Output() onsave = new EventEmitter<any>();
+  @Output() ondelete = new EventEmitter<any>();
+  @Output() onback = new EventEmitter<any>();
+  @Output() onnext = new EventEmitter<any>();
 
+  typeInternal: QuestionType;
+  orderInternal: number;
+  responsesInternal: Response[] = [];
   descriptionInternal: string = '';
-  answerInternal: string = ''; 
-  
+  answerInternal: string = '';
+  showResponses: boolean = false;
+  canEdit: boolean = false; //
+
   ngOnInit(): void {
-    this.descriptionInternal = this.description;
-    this.typeInternal = this.type;
-    this.responsesInternal = this.responses? this.responses:[];
-    this.answerInternal = this.answer? this.answer: '';
+    this.orderInternal = this.order;
+    this.descriptionInternal = this.description || '';
+    this.typeInternal = this.type || QuestionType.MONOSELECTION;
+    this.answerInternal = this.answer || '';
+    this.responsesInternal = this.responses ? [...this.responses] : [];
 
     if (this.responsesInternal.length > 0) {
-      let answers: string[] = this.answer.split(",").filter(x => x !== '');    
+      const answers = this.answerInternal.split(',').filter(x => x !== '');
       this.responsesInternal.forEach(r => {
-        r.checked = answers.indexOf(r.order.toString()) > -1;
+        r.checked = answers.includes(r.order.toString());
       });
     }
 
     this.showResponses = this.shouldShowResponses();
+
+
+    this.canEdit = isUserInRole([Role.TEACHER, Role.ADMIN, Role.SUPER]);
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     this.ngOnInit();
   }
 
-  typechange($event) {
-    this.typeInternal = $event.target.value;   
-    this.showResponses = this.shouldShowResponses();    
+  typechange($event: any) {
+    this.typeInternal = $event.target.value as QuestionType;
+    this.showResponses = this.shouldShowResponses();
     this.answerInternal = '';
-    //this.save();
   }
 
-  // text events
-  textchange($event) {
-    this.descriptionInternal = $event.target.value;    
-    //this.save();
+  textchange(newValue: string) {
+    this.descriptionInternal = newValue;
   }
 
-  answerchange($event) {
-    this.answerInternal = $event.target.value;
-    //this.save();
+  answerchange(newValue: string) {
+    this.answerInternal = newValue;
   }
-
 
   addResponse() {
-    if (this.responsesInternal.filter(r => r.description === '').length > 0) {
-      alert("Rellene primero las respuestas vacias");
-    } else {
-      this.responsesInternal.push({order:this.responsesInternal.length +1, description:'', checked: false});
-      //this.save();
+    this.responsesInternal.push({
+      order: this.responsesInternal.length + 1,
+      description: '',
+      checked: false
+    });
+  }
+
+  saveResponse(response: { order: number, text: string }) {
+    const target = this.responsesInternal.find(o => o.order === response.order);
+    if (target) {
+      target.description = response.text;
     }
   }
 
-  saveResponse(response) {
-    this.responsesInternal.map(o => {if (o.order === response.order) {
-      o.description = response.text;
-    }});
-    //this.save();
-  }
-  
-  removeResponse(response:Response) {
+  removeResponse(response: Response) {
     this.responsesInternal = this.responsesInternal.filter(o => o.order !== response.order);
-    for (let i = 0; i < this.responsesInternal.length; i++) {
-      this.responsesInternal[i].order = i+1;
-    }
-    this.responseChangeSelection({order: response.order, checked: false});
+    this.responsesInternal.forEach((r, i) => r.order = i + 1);
+    this.responseChangeSelection({ order: response.order, checked: false });
   }
 
-  responseChangeSelection(selection) {
+  responseChangeSelection(selection: { order: number, checked: boolean }) {
     if (this.typeInternal === QuestionType.MONOSELECTION) {
       this.answerInternal = selection.order.toString();
-      this.responsesInternal.forEach(r => {
-        if (r.order === selection.order) {
-          r.checked = true;
-        } else {
-          r.checked = false;
-        }
-      })
+      this.responsesInternal.forEach(r => r.checked = r.order === selection.order);
     } else if (this.typeInternal === QuestionType.MULTISELECTION) {
+      const selected = this.answerInternal.split(',').filter(x => x !== '');
+
       if (selection.checked) {
-        let orders =  this.answerInternal.split(",").filter(x => x !== '');
-        orders.push(selection.order.toString());
-        this.answerInternal = orders.join(",");
+        selected.push(selection.order.toString());
       } else {
-        let orders = this.answerInternal.split(",").filter(x => x !== '' && x !== selection.order.toString());        
-        this.answerInternal = orders.join(",");
+        const idx = selected.indexOf(selection.order.toString());
+        if (idx !== -1) selected.splice(idx, 1);
       }
-      let answers = this.answerInternal.split(",").filter(o => o !== '');
-      this.responsesInternal.forEach(r => {
-        if (answers.indexOf(r.order.toString()) > -1) {
-          r.checked = true;
-        } else {
-          r.checked = false;
-        }
-      })
-    }    
-    //this.save();
+
+      this.answerInternal = selected.join(',');
+      const answers = selected;
+      this.responsesInternal.forEach(r => r.checked = answers.includes(r.order.toString()));
+    }
   }
 
   get types(): string[] {
@@ -136,59 +123,27 @@ export class QuestionComponent implements OnInit, OnChanges {
   }
 
   get responsesList(): Response[] {
-    return this.responsesInternal
+    return this.responsesInternal;
   }
 
   cleanResponses() {
     this.responsesInternal = this.responsesInternal.filter(r => r.description !== '');
   }
 
-  validateQuestion() {
-    return this.typeInternal !== '' && this.descriptionInternal !== '' && this.answerInternal !== '' && (!this.shouldShowResponses() || this.responsesInternal.length > 0);
-  }
-
-  save() {    
-    let responses = [];
-
-    //if (this.validateQuestion()) {
-      
-      if (this.shouldShowResponses()) {    
-        for (let i = 0; i < this.responsesInternal.length; i++) {
-          this.responsesInternal[i].order = i +1;
-        }      
-        responses = this.responsesInternal;      
-        let answers = this.answerInternal.split(",").filter(res => (Number(res) <= this.responsesInternal.length));
-        this.answerInternal = answers.join(",");
-      }
-
-      let question = {
-        id: this.id,
-        type: this.typeInternal,
-        description: this.descriptionInternal,
-        responses,
-        answer: this.answerInternal,
-        order: this.order
-      };
-
-      //alert(JSON.stringify(question));
-      this.onsave.emit(question);
-    
-  }
-
   ondeletepush() {
-    this.typeInternal = QuestionType.FREETEXT;
+    this.typeInternal = QuestionType.MONOSELECTION;
     this.descriptionInternal = '';
-    this.showResponses = this.shouldShowResponses();
     this.answerInternal = '';
-    this.ondelete.emit({order: this.order});
+    this.showResponses = this.shouldShowResponses();
+    this.ondelete.emit({ order: this.orderInternal });
   }
 
   onbackpush() {
     this.cleanResponses();
-    this.onback.emit(<Question>{
+    this.onback.emit({
       id: this.id,
       type: this.typeInternal,
-      order: this.order,
+      order: this.orderInternal,
       description: this.descriptionInternal,
       answer: this.answerInternal,
       responses: this.responsesInternal
@@ -197,10 +152,10 @@ export class QuestionComponent implements OnInit, OnChanges {
 
   onnextpush() {
     this.cleanResponses();
-    this.onnext.emit(<Question>{
+    this.onnext.emit({
       id: this.id,
       type: this.typeInternal,
-      order: this.order,
+      order: this.orderInternal,
       description: this.descriptionInternal,
       answer: this.answerInternal,
       responses: this.responsesInternal
@@ -208,9 +163,10 @@ export class QuestionComponent implements OnInit, OnChanges {
   }
 
   shouldShowResponses(): boolean {
-    return this.typeInternal === QuestionType.MONOSELECTION.toString() || this.typeInternal === QuestionType.MULTISELECTION.toString()
-  } 
+    return this.typeInternal === QuestionType.MONOSELECTION || this.typeInternal === QuestionType.MULTISELECTION;
+  }
 
+  trackByOrder(index: number, response: Response): number {
+    return response.order;
+  }
 }
-
-

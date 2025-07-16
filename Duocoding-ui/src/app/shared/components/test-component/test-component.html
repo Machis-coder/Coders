@@ -21,19 +21,20 @@
     </section>
 
 
-    <section class="question-section">
+    <section class="question-section" *ngIf="question">
         <h2>📚 Preguntas</h2>
 
         <div class="question-wrapper">
             <app-question
+                    [id]="question.id"
                     [order]="question.order"
                     [type]="question.type"
                     [description]="question.description"
                     [responses]="question.responses"
                     [answer]="question.answer"
+                    [editable]="canEdit"
                     (onback)="goprevious($event)"
                     (onnext)="gonext($event)"
-                    (onsave)="saveQuestion($event)"
                     (ondelete)="removeQuestion($event)">
             </app-question>
         </div>
@@ -41,7 +42,11 @@
 
 
     <section class="buttons-container">
-        <app-button [class]="'button'" [text]="'🧼 Limpiar'" (click)="$event.stopPropagation(); oncleanpush();"></app-button>
-        <app-button [class]="'button'" [text]="'💾 Guardar'" (click)="$event.stopPropagation(); onsavepush(); "></app-button>
+        <app-button [class]="'button'" [text]="'🧼 Limpiar'" (buttonClick)="oncleanpush();"></app-button>
+        <app-button
+                [text]="'💾 Guardar'"
+                class="button"
+                (buttonClick)="onsavepush()">
+        </app-button>
     </section>
 </div>

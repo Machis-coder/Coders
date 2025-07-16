@@ -1,75 +1,80 @@
 <div class="question-container">
+
+    <!-- Tipo de pregunta -->
     <section class="horizontal-content">
-        <label>{{ order }}</label>
+        <label>{{ orderInternal }}</label>
         <select
                 [value]="typeInternal"
                 (change)="typechange($event)"
+                [disabled]="!canEdit"
                 style="width: 90%;">
-            <option *ngFor="let option of types" [value]="option">
-                {{ option }}
-            </option>
+            <option *ngFor="let option of types" [value]="option">{{ option }}</option>
         </select>
     </section>
 
+    <!-- Texto de la pregunta -->
     <section>
         <h3>Pregunta:</h3>
         <textarea
                 style="border-radius: 8px;"
                 [(ngModel)]="descriptionInternal"
                 (ngModelChange)="textchange($event)"
+                [readonly]="!canEdit"
                 rows="3"
                 placeholder="Descripción">
     </textarea>
     </section>
 
-    <ng-container *ngIf="showResponses">
-        <div class="buttons-container">
-            <h3>Respuestas:</h3>
+    <!-- Respuestas -->
+    <section class="response-section">
+        <h3>Respuestas:</h3>
+
+        <p *ngIf="!showResponses" style="font-style: italic; color: #666;">
+            Esta pregunta no requiere respuestas configurables.
+        </p>
+
+        <!-- Botón + solo si puede editar -->
+        <div *ngIf="showResponses && canEdit" class="buttons-container">
             <app-button
                     text="+"
                     class="button_margin_bottom"
-                    (click)="addResponse()">
+                    (buttonClick)="addResponse()">
             </app-button>
         </div>
 
-        <ng-container *ngFor="let response of responsesList">
-            <app-response
-                    [checked]="response.checked"
-                    [text]="response.description"
-                    [order]="response.order"
-                    [type]="typeInternal"
-                    (remove)="removeResponse(response)"
-                    (changeSelection)="responseChangeSelection($event)"
-                    (changeText)="saveResponse($event)">
-            </app-response>
+        <!-- Lista de respuestas -->
+        <ng-container *ngIf="responsesList?.length">
+            <ng-container *ngFor="let response of responsesList; trackBy: trackByOrder">
+                <app-response
+                        [checked]="response.checked"
+                        [text]="response.description"
+                        [order]="response.order"
+                        [type]="typeInternal"
+                        [editable]="canEdit"
+                (remove)="canEdit && removeResponse(response)"
+                (changeSelection)="responseChangeSelection($event)"
+                (changeText)="saveResponse($event)">
+                </app-response>
+            </ng-container>
         </ng-container>
-    </ng-container>
+    </section>
 
+    <!-- Respuesta correcta -->
     <section id="answer">
         <h3>Respuesta correcta:</h3>
         <input
                 type="text"
-                [disabled]="showResponses"
+                [disabled]="showResponses || !canEdit"
                 [(ngModel)]="answerInternal"
                 (ngModelChange)="answerchange($event)"
                 placeholder="Respuesta" />
     </section>
 
+    <!-- Navegación -->
     <section class="buttons-container" id="buttons">
-        <app-button
-                text="<"
-                class="button"
-                (click)="onbackpush()">
-        </app-button>
-        <app-button
-                text="X"
-                class="button"
-                (click)="ondeletepush()">
-        </app-button>
-        <app-button
-                text=">"
-                class="button"
-                (click)="onnextpush()">
-        </app-button>
+        <app-button text="<" class="button" (buttonClick)="onbackpush()"></app-button>
+        <app-button *ngIf="canEdit" text="X" class="button" (buttonClick)="ondeletepush()"></app-button>
+        <app-button text=">" class="button" (buttonClick)="onnextpush()"></app-button>
     </section>
+
 </div>

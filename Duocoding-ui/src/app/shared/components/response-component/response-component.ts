@@ -11,25 +11,25 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './response-component.css'
 })
 export class ResponseComponent implements OnInit, OnChanges {
-  
+
   @Input() text: string;
   @Input() order: number;
   @Input() type: string;
   @Input() answer: string;
   @Input() checked: boolean;
-  
-  @Output() remove = new EventEmitter<any>();
+  @Input() editable: boolean = true;
 
+  @Output() remove = new EventEmitter<any>();
   @Output() changeSelection = new EventEmitter<any>();
   @Output() changeText = new EventEmitter<any>();
 
-  orderInternal: number
+  orderInternal: number;
   textInternal: string;
   typeInternal: string;
-  answerInternal:string;
+  answerInternal: string;
   checkedInternal: boolean;
-  isMonoSelection:boolean = false;
-  isMultiSelection:boolean = false;
+  isMonoSelection: boolean = false;
+  isMultiSelection: boolean = false;
 
   ngOnInit(): void {
     this.orderInternal = this.order;
@@ -42,28 +42,22 @@ export class ResponseComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.ngOnInit();
+    if (changes['text']) {
+      this.textInternal = this.text;
+    }
   }
 
   onRemove() {
-    this.remove.emit({order: this.orderInternal, text: this.textInternal});
+    this.remove.emit({ order: this.orderInternal, text: this.textInternal });
   }
 
   onSelectionChange($event) {
     this.checkedInternal = $event.target.checked;
-    this.changeSelection.emit({order: this.orderInternal, checked: this.checkedInternal}); 
+    this.changeSelection.emit({ order: this.orderInternal, checked: this.checkedInternal });
   }
 
   onChangeText() {
-    this.changeText.emit({order: this.orderInternal, text: this.textInternal});
+    this.changeText.emit({ order: this.orderInternal, text: this.textInternal });
   }
 
-}
-
-export enum QuestionType {
-  FREETEXT,
-  MONOSELECTION,
-  MULTISELECTION,
-  GAP,
-  CODE
 }

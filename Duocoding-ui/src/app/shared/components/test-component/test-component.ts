@@ -1,13 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ButtonComponent } from '../button-component/button-component';
-import { FormsModule } from '@angular/forms';
-import { QuestionType } from '../../enums/question.types';
-import { Question } from 'src/app/interfaces/question';
-import { QuestionComponent } from '../question-component/question-component';
-import { BasePage } from 'src/app/features/base.page';
-import { Subject } from 'src/app/interfaces/subject';
-import { validateQuestion } from 'src/app/utils/question.utils';
+import {CommonModule} from '@angular/common';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {ButtonComponent} from '../button-component/button-component';
+import {FormsModule} from '@angular/forms';
+import {QuestionType} from '../../enums/question.types';
+import {Question} from 'src/app/interfaces/question';
+import {QuestionComponent} from '../question-component/question-component';
+import {BasePage} from 'src/app/features/base.page';
+import {Subject} from 'src/app/interfaces/subject';
+import {isUserInRole} from "../../../utils/user.utils";
+import Role from "../../../roles";
 
 @Component({
   selector: 'app-test',
@@ -16,138 +17,120 @@ import { validateQuestion } from 'src/app/utils/question.utils';
   templateUrl: './test-component.html',
   styleUrl: './test-component.css'
 })
-export class TestComponent extends BasePage implements OnInit, OnChanges {
-  
+export class TestComponent implements OnInit, OnChanges {
 
   @Input() id: number;
   @Input() subjects: Subject[];
   @Input() subjectId: number;
   @Input() name: string;
   @Input() description: string;
-  
   @Input() questions: Question[];
 
-
-  @Output() onsave = new EventEmitter<any>()
-  @Output() onclean = new EventEmitter<any>()
-
+  @Output() onsave = new EventEmitter<any>();
+  @Output() onclean = new EventEmitter<any>();
 
   subjectInternal: number;
   nameInternal: string;
   descriptionInternal: string;
-  questionsInternal: Question[];
-  answerInternal: string;
+  questionsInternal: Question[] = [];
   index: number = 0;
   question: Question;
+  canEdit: boolean = false;
 
-  
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.subjectInternal = this.subjectId;
     this.nameInternal = this.name;
     this.descriptionInternal = this.description;
-    this.questionsInternal = this.questions? this.questions:[];
-    this.navigateToQuestion(1);
-  }
-  
-  navigateToQuestion(order: number): void {
-    if (order < 1) {
-      order = 1;
+    this.questionsInternal = this.questions ? [...this.questions] : [];
+    this.canEdit = isUserInRole([Role.TEACHER, Role.ADMIN, Role.SUPER]);
+
+    if (this.questionsInternal.length === 0) {
+      this.addQuestion();
     }
-    this.index = order - 1;
-    if (this.questionsInternal.length == 0 || this.index == this.questionsInternal.length) {
-      this.addQuestion();      
-    }    
-    this.question = this.questionsInternal[this.index];    
+
+    this.index = 0;
+    this.question = this.questionsInternal[this.index];
+
   }
 
+  ngOnChanges(): void {
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.ngOnInit();
   }
 
-
-  subjectchange($event) {
-    this.subjectInternal = $event.target.value;    
-  }
-  
-  cleanQuestions() {
-    this.questionsInternal = this.questionsInternal.filter(r => r.description !== '');
+  subjectchange($event: any) {
+    this.subjectInternal = $event.target.value;
   }
 
-  validateQuestions() {
-    return this.questionsInternal.filter(q => validateQuestion(q)).length == this.questionsInternal.length;
-  }
+  onsavepush() {
+    const test = {
+      id: this.id,
+      subjectId: this.subjectInternal,
+      name: this.nameInternal,
+      description: this.descriptionInternal,
+      questions: this.questionsInternal
+    };
 
-  validateTest() {
-    return this.subjectInternal !== undefined && this.nameInternal !== '' && this.descriptionInternal !== '' 
-    && this.questionsInternal.length > 0 && this.validateQuestions();
-  }
-
-
-  onsavepush() {    
-
-    if (this.validateTest()) {
-      let test = {
-        id: this.id,
-        subjectId: this.subjectInternal,
-        name: this.nameInternal,
-        description: this.descriptionInternal,
-        questions: this.questionsInternal
-      };
-
-      alert(JSON.stringify(test));
-      this.onsave.emit(test);
-    } else {
-      alert("El test no esta configurado correctamente.");
-    }
+    alert('✅ Test guardado correctamente\n\n' + JSON.stringify(test, null, 2));
+    this.onsave.emit(test);
   }
 
   oncleanpush() {
     this.ngOnInit();
   }
 
-  saveQuestion(question: Question) {
-    this.questionsInternal.map(q => {
-      if (q.order === question.order) {
-        q.id = question.id;
-        q.type = question.type;
-        q.description = question.description;
-        q.responses = question.responses;
-        q.answer = question.answer;
-      }
-      return q;
-    });    
+  saveQuestion(updatedQuestion: Question) {
+    const index = this.questionsInternal.findIndex(q => q.order === updatedQuestion.order);
+    if (index !== -1) {
+      this.questionsInternal[index] = { ...updatedQuestion };
+    }
   }
 
   removeQuestion(question: Question) {
-    this.questionsInternal = this.questionsInternal.filter(o => o.order !== question.order);
-    for (let i = 0; i < this.questionsInternal.length; i++) {
-      this.questionsInternal[i].order = i+1;
-    }   
-    this.navigateToQuestion(question.order - 1);
+    this.questionsInternal = this.questionsInternal.filter(q => q.order !== question.order);
+    this.questionsInternal.forEach((q, i) => q.order = i + 1);
+    this.index = Math.max(0, this.index - 1);
+    this.question = this.questionsInternal[this.index];
   }
-
-
 
   goprevious(question: Question) {
     this.saveQuestion(question);
-    this.navigateToQuestion(question.order -1);
+    if (this.index > 0) {
+      this.index -= 1;
+      this.question = this.questionsInternal[this.index];
+    }
   }
 
   gonext(question: Question) {
     this.saveQuestion(question);
-    this.navigateToQuestion(question.order + 1);
+
+    if (this.index === this.questionsInternal.length - 1) {
+      this.addQuestion();
+    }
+
+    this.index += 1;
+
+    if (this.index >= this.questionsInternal.length) {
+      this.index = this.questionsInternal.length - 1;
+    }
+
+    this.question = this.questionsInternal[this.index];
+    console.log('Antes de guardar: index =', this.index, 'orden =', question.order);
   }
 
-  
-
-
   addQuestion() {
-    if (!this.validateQuestions()) {
-      alert("Rellene primero las preguntas incompletas");
-    } else {
-      this.questionsInternal.push({id: null, type: QuestionType.FREETEXT,  order:this.questionsInternal.length +1, description:'', responses: [], answer: ''});
-    }
-  } 
+    const newOrder = this.questionsInternal.length > 0
+        ? Math.max(...this.questionsInternal.map(q => q.order)) + 1
+        : 1;
 
+    const newQuestion: Question = {
+      id: null,
+      type: QuestionType.MONOSELECTION,
+      order: newOrder,
+      description: '',
+      responses: [],
+      answer: ''
+    };
+
+    this.questionsInternal.push(newQuestion);
+  }
 }

@@ -1,12 +1,39 @@
 <section class="response-container">
+
+    <!-- Radio para MONOSELECCIÓN -->
     <ng-container *ngIf="isMonoSelection">
-        <input type="radio" [checked]="checkedInternal" name="'respuesta'" (change)="onSelectionChange($event)"/>
+        <input
+                type="radio"
+                [checked]="checkedInternal"
+                name="respuesta{{ orderInternal }}"
+                (change)="onSelectionChange($event)" />
     </ng-container>
+
+    <!-- Checkbox para MULTISELECCIÓN -->
     <ng-container *ngIf="isMultiSelection">
-        <input type="checkbox" [checked]="checkedInternal" (change)="onSelectionChange($event)"/>
+        <input
+                type="checkbox"
+                [checked]="checkedInternal"
+                (change)="onSelectionChange($event)" />
     </ng-container>
-    <!--input type="number" [value]="orderInternal" style="width: 50px;"/-->
-    <label style="text-align: center; width: 10px;">{{orderInternal}}</label>
-    <input type="text" [(ngModel)]="textInternal" (change)="$event.stopPropagation(); onChangeText();"/>    
-    <app-button [text]="'X'" [size]="'MEDIUM'" (click)="onRemove()"/>
+
+    <!-- Número de orden -->
+    <label style="text-align: center; width: 30px;">{{ orderInternal }}</label>
+
+    <!-- Campo de texto desactivado si no puede editar -->
+    <input
+            type="text"
+            [(ngModel)]="textInternal"
+            (ngModelChange)="onChangeText()"
+            placeholder="Escribe una respuesta"
+            style="flex: 1; margin: 0 8px;"
+            [readonly]="!editable" />
+
+    <!-- Botón eliminar solo si tiene permiso -->
+    <app-button
+            *ngIf="editable"
+            [text]="'X'"
+            (buttonClick)="onRemove()">
+    </app-button>
+
 </section>
