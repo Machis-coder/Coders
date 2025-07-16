@@ -1,51 +1,106 @@
-input[type="text"],
-select,
-textarea {
-  width: 100%;
-  padding: 2px;
-  box-sizing: border-box;
-  border-radius: 4px;
-}
-
 .question-container {
-  max-width: 600px;
-  
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-}
-
-.buttons-container {
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 1px;
-  width: auto;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  margin-bottom: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .horizontal-content {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
-.button {
-  width: 30%;
+.horizontal-content label {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #003366;
+  margin: 0;
+}
+
+select {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: border-color 0.2s;
+}
+
+select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background-color: #fdfdfd;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-sizing: border-box;
+  margin-top: 0.5rem;
+}
+
+h3 {
+  color: #003366;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.buttons-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .button_margin_bottom {
-  margin-bottom: 5px;
+  margin-bottom: 1rem;
 }
 
-.green {
-  background-color: green;
-  font-weight: bolder;
+#buttons {
+  justify-content: center;
+  margin-top: 1.5rem;
 }
 
-.red {
-  background-color: red;
-  font-weight: bolder;
-}
+@media (max-width: 768px) {
+  .horizontal-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
+  #buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  input[type="text"],
+  textarea,
+  select {
+    width: 100%;
+  }
+}

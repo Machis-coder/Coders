@@ -98,7 +98,6 @@ export class UserComponent extends BasePage  {
 
   }
 
-
   onSave() {
     if (this.validateForm()) {
       const user: User = {
@@ -108,16 +107,20 @@ export class UserComponent extends BasePage  {
         dni: this.dni,
         birthday: this.birthdate,
         email: this.email,
-        username:  this.username,
+        username: this.username,
         password: this.password,
         repassword: this.repassword,
         role: this.role
-      }
-      this.createOrUpdate(user);           
+      };
+
+      this.createOrUpdate(user);
+
+      alert('✅ Usuario guardado correctamente.');
     } else {
-        alert('Formulario no valido')
+      alert('❌ Formulario no válido. Por favor, revisa los campos.');
     }
-}
+  }
+
 
   onBack() {
     this.router.navigate(['/users']);
